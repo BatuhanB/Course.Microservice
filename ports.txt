@@ -1,0 +1,1 @@
+Catalog.Service.API = http://localhost:5019;
