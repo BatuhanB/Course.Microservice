@@ -22,23 +22,42 @@ public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : 
     
     public async Task<Response<List<TEntity>>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var entities = _mapper.Map<List<TEntity>>(
-            await _collection.FindAsync(category => true, cancellationToken: cancellationToken));
+        var entities = 
+            await _collection.Find(category => true).ToListAsync(cancellationToken);
         return Response<List<TEntity>>.Success(entities, 200);
     }
 
     public async Task<Response<TEntity>> CreateAsync(TEntity entity, CancellationToken cancellationToken)
     {
+        entity.CreatedDate = DateTime.Now;
         await _collection.InsertOneAsync(entity, cancellationToken: cancellationToken);
         var result = _mapper.Map<TEntity>(entity);
         return Response<TEntity>.Success(result,201);
     }
 
-    public async Task<Response<TEntity>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<Response<NoContent>> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        var updateEntity = _mapper.Map<TEntity>(entity);
+        var result = await _collection.FindOneAndReplaceAsync(x => x.Id == entity.Id, updateEntity, cancellationToken: cancellationToken);
+        return result is null ? 
+            Response<NoContent>.Fail($"{typeof(TEntity)} has not found!", 404) :
+            Response<NoContent>.Success(204);
+    }
+
+    public async Task<Response<NoContent>> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _collection.DeleteOneAsync(x => x.Id == id,cancellationToken:cancellationToken);
+        return result.DeletedCount > 0 ? 
+            Response<NoContent>.Success(204) :
+            Response<NoContent>.Fail($"{typeof(TEntity)} has not found!", 404);
+    }
+
+    public async Task<Response<TEntity>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var filter = Builders<TEntity>.Filter.Eq(x=>x.Id, id);
-        var entity = await _collection.Find(filter).FirstOrDefaultAsync();
-        if(entity is null ) throw new ArgumentNullException($"Collection name not defined for entity type {entity}");
-        return Response<TEntity>.Success(entity,201);
+        var entity = await _collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
+        return entity is null ? 
+            Response<TEntity>.Fail($"Collection name not defined for entity type {entity}", 404) : 
+            Response<TEntity>.Success(entity,201);
     }
 }

@@ -5,6 +5,9 @@ namespace Course.Catalog.Service.Api.Models;
 
 public abstract class BaseEntity
 {
-    [BsonRepresentation(BsonType.ObjectId)]
+    [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public Guid Id { get; set; } = Guid.NewGuid();
+    
+    [BsonRepresentation(BsonType.DateTime)]
+    public DateTime CreatedDate { get; set; }
 }

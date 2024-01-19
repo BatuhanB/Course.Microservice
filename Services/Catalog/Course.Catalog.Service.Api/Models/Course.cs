@@ -15,13 +15,10 @@ public class Course : BaseEntity
     public decimal Image { get; set; }
     
     public string? UserId { get; set; }
-    
-    [BsonRepresentation(BsonType.DateTime)]
-    public DateTime CreatedDate { get; set; }
 
     public Feature? Feature { get; set; }
     
-    [BsonRepresentation(BsonType.ObjectId)]
+    [BsonGuidRepresentation(GuidRepresentation.Standard)]
     public required Guid CategoryId{ get; set; }
     
     [BsonIgnore]
