@@ -2,9 +2,7 @@ namespace Course.Catalog.Service.Api.Settings;
 
 public interface IDatabaseSettings
 {
-    public string CourseCollectionName { get; set; }    
-    public string CategoryCollectionName { get; set; }    
-    public string FeatureCollectionName { get; set; }    
-    public string ConnectionString { get; set; }    
-    public string DatabaseName { get; set; }
+    string GetCollectionName<TEntity>();
+    string ConnectionString { get; set; }
+    string DatabaseName { get; set; }
 }

@@ -1,4 +1,6 @@
 using Course.Catalog.Service.Api.Services.Category;
+using Course.Catalog.Service.Api.Services.Course;
+using Course.Catalog.Service.Api.Services.Generic;
 using Course.Catalog.Service.Api.Settings;
 using Microsoft.Extensions.Options;
 
@@ -12,7 +14,9 @@ public static class DependencyResolver
         services.AddAutoMapper(assembly);
         services.Configure<DatabaseSettings>(configuration.GetSection("DatabaseSettings"));
         services.AddSingleton<IDatabaseSettings>(opt => opt.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+        services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ICourseService, CourseService>();
         return services;
     }
 }

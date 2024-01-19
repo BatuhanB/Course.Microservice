@@ -1,12 +1,7 @@
-using Course.Catalog.Service.Api.Dtos;
-using Course.Shared.Dtos;
+using Course.Catalog.Service.Api.Services.Generic;
 
 namespace Course.Catalog.Service.Api.Services.Category;
 
-public interface ICategoryService
+public interface ICategoryService : IGenericService<Models.Category>
 {
-    Task<Response<List<CategoryDto>>> GetAllAsync(CancellationToken cancellationToken);
-    Task<Response<CategoryDto>> CreateAsync(Models.Category category, CancellationToken cancellationToken);
-
-    Task<Response<CategoryDto>> GetById(Guid id, CancellationToken cancellationToken);
 }

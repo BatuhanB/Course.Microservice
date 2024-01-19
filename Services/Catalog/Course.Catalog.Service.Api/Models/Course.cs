@@ -3,11 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Course.Catalog.Service.Api.Models;
 
-public class Course
+public class Course : BaseEntity
 {
-    [BsonRepresentation(BsonType.ObjectId)]
-    public Guid Id { get; set; } = Guid.NewGuid();
-
     public required string Name { get; set; }
     
     public required string Description { get; set; }
