@@ -1,3 +1,4 @@
+using Course.Catalog.Service.Api.Dtos.Category;
 using Course.Catalog.Service.Api.Services.Category;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
@@ -24,16 +25,16 @@ public class CategoriesController(ICategoryService categoryService) : BaseContro
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(Models.Category category,CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] CategoryDto category,CancellationToken cancellationToken)
     {
         var result = await categoryService.CreateAsync(category, cancellationToken);
         return CreateActionResultInstance(result);
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync(Models.Category category,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody]CategoryDto dto,CancellationToken cancellationToken)
     {
-        var result = await categoryService.UpdateAsync(category, cancellationToken);
+        var result = await categoryService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);
     }
     

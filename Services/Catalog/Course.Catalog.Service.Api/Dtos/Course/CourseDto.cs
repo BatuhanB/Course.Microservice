@@ -1,10 +1,13 @@
+using System.Net.Mime;
 using System.Text.Json.Serialization;
+using Course.Catalog.Service.Api.Dtos.Category;
+using Course.Catalog.Service.Api.Dtos.Feature;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Course.Catalog.Service.Api.Models;
+namespace Course.Catalog.Service.Api.Dtos.Course;
 
-public class Course : BaseEntity
+public class CourseDto : BaseDto
 {
     public required string Name { get; set; }
     
@@ -16,13 +19,11 @@ public class Course : BaseEntity
     public string? Image { get; set; }
     
     public string? UserId { get; set; }
-
     [JsonIgnore]
-    public Feature? Feature { get; set; }
-    
-    public Guid CategoryId{ get; set; }
-    
     [BsonIgnore]
+    public FeatureDto? Feature { get; set; }
+    public Guid CategoryId{ get; set; }
     [JsonIgnore]
-    public Category? Category{ get; set; }
+    [BsonIgnore]
+    public CategoryDto? Category{ get; set; }
 }

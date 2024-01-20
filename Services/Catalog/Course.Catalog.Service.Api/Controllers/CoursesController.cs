@@ -1,3 +1,4 @@
+using Course.Catalog.Service.Api.Dtos.Course;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
 using Microsoft.AspNetCore.Mvc;
@@ -44,16 +45,16 @@ public class CoursesController(ICourseService courseService) : BaseController
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(Models.Course course,CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync(CourseDto course,CancellationToken cancellationToken)
     {
         var result = await courseService.CreateAsync(course, cancellationToken);
         return CreateActionResultInstance(result);
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync(Models.Course course,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(CourseDto dto,CancellationToken cancellationToken)
     {
-        var result = await courseService.UpdateAsync(course, cancellationToken);
+        var result = await courseService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);
     }
     

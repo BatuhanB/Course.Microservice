@@ -11,12 +11,12 @@ public static class DependencyResolver
     public static IServiceCollection RegisterServices(this IServiceCollection services,IConfiguration configuration)
     {
         var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-        services.AddAutoMapper(assembly);
         services.Configure<DatabaseSettings>(configuration.GetSection("DatabaseSettings"));
         services.AddSingleton<IDatabaseSettings>(opt => opt.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-        services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+        services.AddScoped(typeof(IGenericService<,>), typeof(GenericService<,>));
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ICourseService, CourseService>();
+        services.AddAutoMapper(assembly);
         return services;
     }
 }
