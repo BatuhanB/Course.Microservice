@@ -19,9 +19,9 @@ public class CourseDto : BaseDto
     public string? Image { get; set; }
     
     public string? UserId { get; set; }
-    [JsonIgnore]
-    [BsonIgnore]
+    
     public FeatureDto? Feature { get; set; }
+    
     public Guid CategoryId{ get; set; }
     [JsonIgnore]
     [BsonIgnore]
