@@ -21,7 +21,11 @@ public class Profiles : Profile
         CreateMap<CourseDto, Models.Course>().ReverseMap();
         CreateMap<CourseWithCategoryDto, Models.Course>().ReverseMap();
         CreateMap<CourseDto, CourseWithCategoryDto>().ReverseMap();
+        
         CreateMap<Models.Feature, FeatureDto>().ReverseMap();
+        
         CreateMap<Models.Category, CategoryDto>().ReverseMap();
+        CreateMap<CategoryWithCoursesDto, CategoryDto>().ReverseMap();
+        CreateMap<CategoryWithCoursesDto, Models.Category>().ReverseMap();
     }
 }
