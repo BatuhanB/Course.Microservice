@@ -5,7 +5,7 @@ using Course.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Course.IdentityServer
+namespace Course.IdentityServer.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class UserController : Controller

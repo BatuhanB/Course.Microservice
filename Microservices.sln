@@ -6,11 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{B215
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Catalog.Service.Api", "Services\Catalog\Course.Catalog.Service.Api\Course.Catalog.Service.Api.csproj", "{12F5A38B-0FDA-4AEC-993E-D7DC7084008A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{11832A6E-AB04-46E8-AD9A-BCF47360B14B}"
-	ProjectSection(SolutionItems) = preProject
-		ports.txt = ports.txt
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{27C65458-A075-4F71-9C40-1DBAAB86EB7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Shared", "Shared\Course.Shared\Course.Shared.csproj", "{45C142F9-39EB-47B6-AE12-7E471BF153A8}"
@@ -18,6 +13,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{1F7A8ECF-19F8-4549-B8EF-D24649A6C436}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.IdentityServer", "IdentityServer\Course.IdentityServer\Course.IdentityServer.csproj", "{04C731E5-D07D-4050-B19B-52A23074E486}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D4AC2293-839A-46F3-B924-95B54F3730B8}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		ports.txt = ports.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

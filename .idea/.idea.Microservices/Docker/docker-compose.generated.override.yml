@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  catalog.api:
+    build:
+      context: "C:\\Users\\balib\\source\\repos\\Microservices"
+      dockerfile: "Services/Catalog/Course.Catalog.Service.Api/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Course.Catalog.Service.Api.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "catalogapi:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\balib\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\balib\\source\\repos\\Microservices\\Services\\Catalog\\Course.Catalog.Service.Api:/app:rw"
+    - "C:\\Users\\balib\\source\\repos\\Microservices:/src:rw"
+    working_dir: "/app"

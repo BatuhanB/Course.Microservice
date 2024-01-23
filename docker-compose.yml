@@ -1,0 +1,53 @@
+﻿version: '3.4'
+
+services:
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    container_name: catalog.api
+    build:
+      context: .
+      dockerfile: Services/Catalog/Course.Catalog.Service.Api/Dockerfile
+    ports:
+      - 5000
+      - 5001
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTPS_PORTS=5001
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  catalog.database:
+    container_name: catalog.database
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/db
+      - ./data/configdb
+    command: mongod
+  identity.server.app:
+    image: ${DOCKER_REGISTRY-}identityserverapp
+    container_name: identity.server.app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS="https://+;http://+"
+      - ASPNETCORE_HTTP_PORT=5002
+      - ASPNETCORE_HTTPS_PORT=5003
+    ports:
+      - 5002
+      - 5003
+    volumes:
+      - ${APPDATA}\Microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - ${APPDATA}\.aspnet\https:/root/.aspnet/https/
+  identity.server.database:
+    container_name: identity.server.database
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password12*"
+    ports:
+      - 1434:1433
+    volumes:
+      - ./.containers/identity-server/:/var/opt/mssql
