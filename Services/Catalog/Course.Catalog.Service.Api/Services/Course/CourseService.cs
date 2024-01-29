@@ -10,7 +10,7 @@ using MongoDB.Driver;
 namespace Course.Catalog.Service.Api.Services.Course;
 
 public class CourseService(IMapper mapper, IDatabaseSettings databaseSettings, ICategoryService categoryService)
-    : GenericService<Models.Course,CourseDto>(mapper, databaseSettings), ICourseService
+    : GenericService<CourseDto, Models.Course>(mapper, databaseSettings), ICourseService
 {
     private readonly ICategoryService _categoryService = categoryService;
     public async Task<Response<List<CourseWithCategoryDto>>> GetAllWithCategoryAsync(CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ public class CourseService(IMapper mapper, IDatabaseSettings databaseSettings, I
   
         if (course is null) return Response<CourseWithCategoryDto>.Fail($"No course has been found with {id}", 404);
 
-        course.Category =  _categoryService.GetByIdAsync(course.CategoryId, cancellationToken).Result.Data;
+        course.Category =  _mapper.Map<Models.Category>(_categoryService.GetByIdAsync(course.CategoryId, cancellationToken).Result.Data);
         
         return Response<CourseWithCategoryDto>.Success(_mapper.Map<CourseWithCategoryDto>(course),200);
     }

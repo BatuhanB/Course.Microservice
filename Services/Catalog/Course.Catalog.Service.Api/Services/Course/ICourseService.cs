@@ -5,7 +5,7 @@ using Course.Shared.Dtos;
 
 namespace Course.Catalog.Service.Api.Services.Course;
 
-public interface ICourseService : IGenericService<Models.Course,CourseDto>
+public interface ICourseService : IGenericService<CourseDto, Models.Course>
 {
     Task<Response<List<CourseWithCategoryDto>>> GetAllWithCategoryAsync(CancellationToken cancellationToken);
     Task<Response<CourseWithCategoryDto>> GetByIdWithCategory(Guid id,CancellationToken cancellationToken);

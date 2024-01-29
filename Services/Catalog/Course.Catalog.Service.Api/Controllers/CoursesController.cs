@@ -1,4 +1,3 @@
-using Course.Catalog.Service.Api.Dtos.Course;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
 using Microsoft.AspNetCore.Mvc;
@@ -15,44 +14,44 @@ public class CoursesController(ICourseService courseService) : BaseController
         var result = await courseService.GetAllAsync(cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAllWithCategoryAsync(CancellationToken cancellationToken)
     {
         var result = await courseService.GetAllWithCategoryAsync(cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpGet("{userId:guid}")]
-    public async Task<IActionResult> GetAllWithCategoryAsync(Guid userId,CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(Guid userId, CancellationToken cancellationToken)
     {
-        var result = await courseService.GetAllByUserIdWithCategory(userId,cancellationToken);
+        var result = await courseService.GetAllByUserIdWithCategory(userId, cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdAsync(Guid id,CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await courseService.GetByIdAsync(id,cancellationToken);
+        var result = await courseService.GetByIdAsync(id, cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdWithCategoryAsync(Guid id,CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdWithCategoryAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await courseService.GetByIdWithCategory(id, cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(CourseDto course,CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] Models.Course course,CancellationToken cancellationToken)
     {
         var result = await courseService.CreateAsync(course, cancellationToken);
         return CreateActionResultInstance(result);
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync(CourseDto dto,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] Models.Course dto,CancellationToken cancellationToken)
     {
         var result = await courseService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);

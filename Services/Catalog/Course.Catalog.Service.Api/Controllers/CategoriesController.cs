@@ -31,14 +31,14 @@ public class CategoriesController(ICategoryService categoryService) : BaseContro
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CategoryDto category, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] Models.Category category, CancellationToken cancellationToken)
     {
         var result = await categoryService.CreateAsync(category, cancellationToken);
         return CreateActionResultInstance(result);
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromBody] CategoryDto dto, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] Models.Category dto, CancellationToken cancellationToken)
     {
         var result = await categoryService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);

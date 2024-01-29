@@ -8,10 +8,10 @@ using MongoDB.Driver;
 
 namespace Course.Catalog.Service.Api.Services.Category;
 
-public class CategoryService(IMapper mapper, IDatabaseSettings databaseSettings,IGenericService<Models.Course, CourseDto> courseCollectionService)
-    : GenericService<Models.Category,CategoryDto>(mapper, databaseSettings), ICategoryService
+public class CategoryService(IMapper mapper, IDatabaseSettings databaseSettings,IGenericService<CourseDto, Models.Course> courseCollectionService)
+    : GenericService<CategoryDto, Models.Category>(mapper, databaseSettings), ICategoryService
 {
-    private readonly IGenericService<Models.Course,CourseDto> _courseCollectionService = courseCollectionService;
+    private readonly IGenericService<CourseDto, Models.Course> _courseCollectionService = courseCollectionService;
 
     public async Task<Response<List<CategoryWithCoursesDto>>> GetAllCategoryWithCourses(CancellationToken cancellationToken)
     {
