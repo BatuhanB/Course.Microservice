@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Course.IdentityServer.Dtos;
@@ -38,6 +39,28 @@ namespace Course.IdentityServer.Controllers
             var errors = result.Errors.Select(x => x.Description).ToList();
             
             return BadRequest(Response<NoContent>.Fail(errors,404));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(x=>x.Type == JwtRegisteredClaimNames.Sub);
+
+            
+            if (userIdClaim == null) return BadRequest();
+
+            var user = await _userManager.FindByIdAsync(userIdClaim.Value);
+
+            if (user == null) return BadRequest();
+
+            return Ok(new
+            {
+                Id= user.Id,
+                UserName= user.UserName,
+                City= user.City,
+                Email = user.Email
+            });
         }
     }
 }

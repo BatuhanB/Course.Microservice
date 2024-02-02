@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Course.IdentityServer
@@ -19,6 +20,16 @@ namespace Course.IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
                    {
+                       new IdentityResources.Email(),
+                       new IdentityResources.OpenId(),
+                       new IdentityResources.Profile(),
+                       new IdentityResource(){
+                           Name="roles",
+                           DisplayName="Roles",
+                           Description="User Roles",
+                           UserClaims= new[]{ "role" }
+                       },
+
                    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -38,7 +49,26 @@ namespace Course.IdentityServer
                     ClientId="FrontEndClient",
                     ClientSecrets={ new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
-                    AllowedScopes={ "catalog_fullpermission", "photostock_fullpermission", IdentityServerConstants.LocalApi.ScopeName}
+                    AllowedScopes={ "catalog_fullpermission",
+                                    "photostock_fullpermission",
+                                    IdentityServerConstants.LocalApi.ScopeName}
+                },
+                new Client()
+                {
+                    ClientName="ASP.Net Core MVC",
+                    ClientId="FrontEndClientWithResource",
+                    AllowOfflineAccess=true,
+                    ClientSecrets={ new Secret("secret".Sha256())},
+                    AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes={ IdentityServerConstants.LocalApi.ScopeName,
+                                    IdentityServerConstants.StandardScopes.Email,
+                                    IdentityServerConstants.StandardScopes.OpenId,
+                                    IdentityServerConstants.StandardScopes.Profile,
+                                    IdentityServerConstants.StandardScopes.OfflineAccess},
+                    AccessTokenLifetime = 3600,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60) - DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
     }

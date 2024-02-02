@@ -26,17 +26,20 @@ services:
       - db-data:/data/db
       - db-data:/data/configdb
     command: mongod
-  # identity.server.app:
-  #   image: ${DOCKER_REGISTRY-}identityserverapp
-  #   container_name: identity.server.app
+  # identity.server:
+  #   image: ${DOCKER_REGISTRY-}identityserver
+  #   container_name: identity.server
+  #   build:
+  #     context: .
+  #     dockerfile: IdentityServer/Course.IdentityServer/Dockerfile
   #   environment:
+  #     - ASPNETCORE_URLS="https://+:5003;http://+:5002"
   #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_URLS="https://+;http://+"
   #     - ASPNETCORE_HTTP_PORT=5002
   #     - ASPNETCORE_HTTPS_PORT=5003
   #   ports:
-  #     - 5002
-  #     - 5003
+  #     - "5002:5002"
+  #     - "5003:5003"
   #   volumes:
   #     - ${APPDATA}\Microsoft\UserSecrets\:/root/.microsoft/usersecrets
   #     - ${APPDATA}\.aspnet\https:/root/.aspnet/https/
@@ -48,8 +51,8 @@ services:
   #     ACCEPT_EULA: "Y"
   #     SA_PASSWORD: "Password12*"
   #   ports:
-  #     - 1434:1433
+  #     - "1435:1433"
   #   volumes:
-  #     - ./.containers/identity-server/:/var/opt/mssql
+  #     - ${APPDATA}/identity-server/:/var/opt/mssql/data
 volumes:
   db-data:
