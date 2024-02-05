@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Ports.txt = Ports.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PhotoStock", "PhotoStock", "{A168447D-61D0-48FB-9CA5-9FDF80CB813E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.PhotoStock.Service.Api", "Services\PhotoStock\Course.PhotoStock.Service.Api\Course.PhotoStock.Service.Api.csproj", "{8B135413-B2B2-4D2C-AEC3-109746215C75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,10 @@ Global
 		{A0B6D1A9-C6C5-4983-8A8B-C325888779EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B6D1A9-C6C5-4983-8A8B-C325888779EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B6D1A9-C6C5-4983-8A8B-C325888779EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B135413-B2B2-4D2C-AEC3-109746215C75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B135413-B2B2-4D2C-AEC3-109746215C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B135413-B2B2-4D2C-AEC3-109746215C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B135413-B2B2-4D2C-AEC3-109746215C75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,8 @@ Global
 		{12F5A38B-0FDA-4AEC-993E-D7DC7084008A} = {B2152ADB-7A35-43BB-A311-7829CF8BF0E2}
 		{45C142F9-39EB-47B6-AE12-7E471BF153A8} = {27C65458-A075-4F71-9C40-1DBAAB86EB7D}
 		{04C731E5-D07D-4050-B19B-52A23074E486} = {1F7A8ECF-19F8-4549-B8EF-D24649A6C436}
+		{A168447D-61D0-48FB-9CA5-9FDF80CB813E} = {EA5D60CF-6D39-45CE-AFE3-6F0E5607BB7A}
+		{8B135413-B2B2-4D2C-AEC3-109746215C75} = {A168447D-61D0-48FB-9CA5-9FDF80CB813E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7020AC2F-C4F0-42DC-B4F1-042D09B010F6}

@@ -1,4 +1,3 @@
-using Course.Catalog.Service.Api;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -17,10 +16,7 @@ builder.Services.AddControllers(opt =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
-
-builder.Services.RegisterServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -29,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
