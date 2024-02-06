@@ -1,9 +1,7 @@
 ﻿using Course.PhotoStock.Service.Api.Dtos;
 using Course.Shared.BaseController;
 using Course.Shared.Dtos;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Course.PhotoStock.Service.Api.Controllers
 {
