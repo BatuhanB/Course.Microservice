@@ -1,18 +1,16 @@
-using Course.Order.Service.Api.Services.Concretes;
-using Course.Order.Service.Api.Services.Contracts;
-using Course.Order.Service.Api.Settings;
+using Course.Discount.Service.Api.Service.Concretes;
+using Course.Discount.Service.Api.Service.Contracts;
 using Course.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Extensions.Options;
-
+using Npgsql;
+using System.Data;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
-
+builder.Services.AddSingleton<IDbConnection>((sp) => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
 
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
@@ -29,21 +27,13 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
 });
 
-builder.Services.AddSingleton(sp =>
-{
-    var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-    var redisService = new RedisService(settings.Host, settings.Port);
-    redisService.Connect();
-    return redisService;
-});
-
-
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
