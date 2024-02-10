@@ -1,0 +1,6 @@
+@Course.Order.API_HostAddress = http://localhost:5261
+
+GET {{Course.Order.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
