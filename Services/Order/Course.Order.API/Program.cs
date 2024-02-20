@@ -1,9 +1,12 @@
+using Course.Order.Application;
 using Course.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationDependency();
 
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
