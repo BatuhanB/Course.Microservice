@@ -1,0 +1,6 @@
+@Course.FakePayment.Service.Api_HostAddress = http://localhost:5288
+
+GET {{Course.FakePayment.Service.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

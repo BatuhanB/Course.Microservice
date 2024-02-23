@@ -18,6 +18,7 @@ namespace Course.IdentityServer
             new ApiResource("resource_basket"){Scopes={ "basket_fullpermission" } },
             new ApiResource("resource_discount"){Scopes={ "discount_fullpermission" } },
             new ApiResource("resource_order"){Scopes={ "order_fullpermission" } },
+            new ApiResource("resource_fake_payment"){Scopes={ "fake_payment_fullpermission" } },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -43,6 +44,7 @@ namespace Course.IdentityServer
                 new ApiScope("basket_fullpermission","Full Permission For Basket API"),
                 new ApiScope("discount_fullpermission","Full Permission For Discount API"),
                 new ApiScope("order_fullpermission","Full Permission For Order API"),
+                new ApiScope("fake_payment_fullpermission","Full Permission For Fake Payment API"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -69,6 +71,7 @@ namespace Course.IdentityServer
                     AllowedScopes={ "basket_fullpermission",
                                     "discount_fullpermission",
                                     "order_fullpermission",
+                                    "fake_payment_fullpermission",
                                     IdentityServerConstants.LocalApi.ScopeName,
                                     IdentityServerConstants.StandardScopes.Email,
                                     IdentityServerConstants.StandardScopes.OpenId,

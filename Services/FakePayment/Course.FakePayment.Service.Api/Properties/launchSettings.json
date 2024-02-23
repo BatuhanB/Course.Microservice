@@ -4,12 +4,12 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:21605",
+      "applicationUrl": "http://localhost:29436",
       "sslPort": 0
     }
   },
   "profiles": {
-    "Course.Order.Service.Api": {
+    "Course.FakePayment.Service.Api": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "swagger",
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5023"
+      "applicationUrl": "http://localhost:5024"
     },
     "IIS Express": {
       "commandName": "IISExpress",
