@@ -1,6 +1,6 @@
 Catalog.Service.API = http://localhost:5019;
 PhotoStock.Service.API = http://localhost:5020;
-Order.Service.API = http://localhost:5021;
+Basket.Service.API = http://localhost:5021;
 Discount.Service.API = http://localhost:5022;
-Discount.Service.API = http://localhost:5023;
+Order.Service.API = http://localhost:5023;
 IdentityServer = https://localhost:5004;

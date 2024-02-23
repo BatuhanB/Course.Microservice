@@ -15,9 +15,9 @@ public class OrdersController(ISharedIdentityService identityService) : BaseCont
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
     [HttpGet]
-    public async Task<IActionResult> Get(int page, int pageSize,CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Get(int page, int pageSize, CancellationToken cancellationToken = default)
     {
-        var result = await Mediator.Send(new GetOrdersByUserIdQuery(_identityService.GetUserId, new(page, pageSize)), cancellationToken));
+        var result = await Mediator.Send(new GetOrdersByUserIdQuery(_identityService.GetUserId, new(page, pageSize)), cancellationToken);
 
         return CreateActionResultInstance(result);
     }
