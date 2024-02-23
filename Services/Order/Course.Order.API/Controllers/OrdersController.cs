@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Course.Shared.BaseController;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Course.Order.API.Controllers
+namespace Course.Order.API.Controllers;
+public class OrdersController : BaseController
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class OrdersController : ControllerBase
+    [HttpGet]
+    public string Get()
     {
-        [HttpGet]
-        public string Get()
-        {
-            return "a";
-        }
+        return "a";
     }
 }

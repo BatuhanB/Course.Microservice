@@ -35,7 +35,7 @@ public class CreateOrderCommandHandler(IWriteRepository<Domain.OrderAggregate.Or
         Domain.OrderAggregate.Order mappedOrder = _mapper.Map<Domain.OrderAggregate.Order>(request);
 
         var result = await _writeRepository.AddAsync(mappedOrder, cancellationToken);
-        await _writeRepository.SaveChangesAsync();
+        await _writeRepository.SaveChangesAsync(cancellationToken);
         var response = new CreatedOrderDto(result.Id);
 
         return Response<CreatedOrderDto>.Success(response, 201);

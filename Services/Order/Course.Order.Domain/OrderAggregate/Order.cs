@@ -1,11 +1,22 @@
 ﻿using Course.Order.Core;
 
 namespace Course.Order.Domain.OrderAggregate;
-public class Order(Address address, string buyerId) : Entity, IAggregateRoot
+public class Order : Entity, IAggregateRoot
 {
+    public Order()
+    {
+        
+    }
+
+    public Order(Address address, string buyerId)
+    {
+        Address = address;
+        BuyerId = buyerId;
+    }
+
     public DateTime CreatedDate { get; private set; } = DateTime.Now;
-    public Address Address { get; private set; } = address;
-    public string BuyerId { get; private set; } = buyerId;
+    public Address Address { get; private set; }
+    public string BuyerId { get; private set; }
     //Shadow Property => not setted OrderId
 
     //backing field

@@ -23,6 +23,11 @@ public class GetOrdersByUserIdQueryHandler(IReadRepository<Domain.OrderAggregate
             enableTracking: false,
             cancellationToken: cancellationToken);
 
+        if (!orders.Items.Any())
+        {
+            return Response<OrderListDto>.Success(new OrderListDto(), 200);
+        }
+
         var mappedOrders = _mapper.Map<OrderListDto>(orders);
         return Response<OrderListDto>.Success(mappedOrders, 200);
     }

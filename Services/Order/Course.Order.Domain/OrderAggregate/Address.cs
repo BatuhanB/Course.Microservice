@@ -2,13 +2,26 @@
 
 namespace Course.Order.Domain.OrderAggregate;
 //Owned Types
-public class Address(string province, string district, string street, string zipCode, string line) : ValueObject
+public class Address : ValueObject
 {
-    public string Province { get; private set; } = province;
-    public string District { get; private set; } = district;
-    public string Street { get; private set; } = street;
-    public string ZipCode { get; private set; } = zipCode;
-    public string Line { get; private set; } = line;
+    public Address()
+    {
+        
+    }
+    public Address(string province, string district, string street, string zipCode, string line)
+    {
+        Province = province;
+        District = district;
+        Street = street;
+        ZipCode = zipCode;
+        Line = line;
+    }
+
+    public string Province { get; private set; }
+    public string District { get; private set; }
+    public string Street { get; private set; }
+    public string ZipCode { get; private set; }
+    public string Line { get; private set; }
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
