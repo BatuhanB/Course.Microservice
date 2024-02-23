@@ -22,35 +22,16 @@ namespace Course.Order.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Address_Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address_Line = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BuyerId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                schema: "ordering",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Line = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalSchema: "ordering",
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,10 +68,6 @@ namespace Course.Order.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Addresses",
-                schema: "ordering");
-
             migrationBuilder.DropTable(
                 name: "OrderItems",
                 schema: "ordering");

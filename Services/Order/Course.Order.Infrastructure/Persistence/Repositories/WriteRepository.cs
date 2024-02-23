@@ -9,19 +9,22 @@ public class WriteRepository<TEntity, TContext>(TContext context) : IWriteReposi
 
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        Context.Entry(entity).State = EntityState.Added;
+        //Context.Entry(entity).State = EntityState.Added;
+        await Context.AddAsync(entity, cancellationToken);
         return entity;
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        Context.Entry(entity).State = EntityState.Modified;
+        //Context.Entry(entity).State = EntityState.Modified;
+        Context.Update(entity);
         return entity;
     }
 
     public async Task<TEntity> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        Context.Entry(entity).State = EntityState.Deleted;
+        //Context.Entry(entity).State = EntityState.Deleted;
+        Context.Remove(entity);
         return entity;
     }
 

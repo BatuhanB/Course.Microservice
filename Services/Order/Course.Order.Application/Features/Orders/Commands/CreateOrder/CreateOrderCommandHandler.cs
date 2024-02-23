@@ -2,6 +2,7 @@
 using Course.Order.Application.Contracts;
 using Course.Order.Application.Dtos;
 using Course.Order.Application.Features.Orders.Constants;
+using Course.Order.Domain.OrderAggregate;
 using Course.Shared.Dtos;
 using MediatR;
 
@@ -31,8 +32,7 @@ public class CreateOrderCommandHandler(IWriteRepository<Domain.OrderAggregate.Or
         {
             return Response<CreatedOrderDto>.Fail(OrderConstants.CreatedOrderNotValid, 500);
         }
-
-        Domain.OrderAggregate.Order mappedOrder = _mapper.Map<Domain.OrderAggregate.Order>(request);
+        var mappedOrder = _mapper.Map<Domain.OrderAggregate.Order>(request);
 
         var result = await _writeRepository.AddAsync(mappedOrder, cancellationToken);
         await _writeRepository.SaveChangesAsync(cancellationToken);

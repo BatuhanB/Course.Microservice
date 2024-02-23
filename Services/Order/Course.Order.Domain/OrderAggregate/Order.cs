@@ -3,35 +3,37 @@
 namespace Course.Order.Domain.OrderAggregate;
 public class Order : Entity, IAggregateRoot
 {
-    public Order()
-    {
-        
-    }
+    public DateTime CreatedDate { get; private set; }
 
-    public Order(Address address, string buyerId)
-    {
-        Address = address;
-        BuyerId = buyerId;
-    }
-
-    public DateTime CreatedDate { get; private set; } = DateTime.Now;
     public Address Address { get; private set; }
-    public string BuyerId { get; private set; }
-    //Shadow Property => not setted OrderId
 
-    //backing field
-    private readonly List<OrderItem> _orderItems = [];
+    public string BuyerId { get; private set; }
+
+    private readonly List<OrderItem> _orderItems;
 
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
 
-    public void AddOrderItem(string productId,string productName,string imageUrl,decimal price)
+    public Order()
     {
-        var isExists = _orderItems.Exists(x=>x.ProductId == productId);
+    }
 
-        if(!isExists)
+    public Order(string buyerId, Address address)
+    {
+        _orderItems = new List<OrderItem>();
+        CreatedDate = DateTime.Now;
+        BuyerId = buyerId;
+        Address = address;
+    }
+
+    public void AddOrderItem(string productId, string productName, decimal price, string imageUrl)
+    {
+        var existProduct = _orderItems.Any(x => x.ProductId == productId);
+
+        if (!existProduct)
         {
-            var orderItem = new OrderItem(productId, productName, imageUrl, price);
-            _orderItems.Add(orderItem);
+            var newOrderItem = new OrderItem(productId, productName, imageUrl, price);
+
+            _orderItems.Add(newOrderItem);
         }
     }
 
