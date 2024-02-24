@@ -1,0 +1,91 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5019
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/catalog/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5020
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/photostock/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5021
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/basket/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5022
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/discount/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5023
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/order/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5024
+        }
+      ],
+      //Client Request URL
+      "UpstreamPathTemplate": "/services/fakepayment/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000"
+  }
+}
