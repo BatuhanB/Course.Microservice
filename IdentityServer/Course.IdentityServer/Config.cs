@@ -19,6 +19,7 @@ namespace Course.IdentityServer
             new ApiResource("resource_discount"){Scopes={ "discount_fullpermission" } },
             new ApiResource("resource_order"){Scopes={ "order_fullpermission" } },
             new ApiResource("resource_fake_payment"){Scopes={ "fake_payment_fullpermission" } },
+            new ApiResource("resource_gateway"){Scopes={ "gateway_fullpermission" } },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -45,6 +46,7 @@ namespace Course.IdentityServer
                 new ApiScope("discount_fullpermission","Full Permission For Discount API"),
                 new ApiScope("order_fullpermission","Full Permission For Order API"),
                 new ApiScope("fake_payment_fullpermission","Full Permission For Fake Payment API"),
+                new ApiScope("gateway_fullpermission","Full Permission For API Gateway"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -59,6 +61,7 @@ namespace Course.IdentityServer
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
                     AllowedScopes={ "catalog_fullpermission",
                                     "photostock_fullpermission",
+                                    "gateway_fullpermission",
                                     IdentityServerConstants.LocalApi.ScopeName}
                 },
                 new Client()
@@ -72,6 +75,7 @@ namespace Course.IdentityServer
                                     "discount_fullpermission",
                                     "order_fullpermission",
                                     "fake_payment_fullpermission",
+                                    "gateway_fullpermission",
                                     IdentityServerConstants.LocalApi.ScopeName,
                                     IdentityServerConstants.StandardScopes.Email,
                                     IdentityServerConstants.StandardScopes.OpenId,

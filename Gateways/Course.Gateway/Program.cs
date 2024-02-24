@@ -3,6 +3,14 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
+{
+    options.Authority = builder.Configuration["Token:Issuer"];
+    options.Audience = builder.Configuration["Token:Audience"];
+    options.MapInboundClaims = false;
+});
+
+
 builder.Host.ConfigureAppConfiguration((hostingContext,config) =>
 {
     config
