@@ -29,6 +29,7 @@ namespace Course.Web.Controllers
                 {
                     ModelState.AddModelError(String.Empty,e);
                 });
+                return View();
             }
 
             return RedirectToAction("Index", "Home");
