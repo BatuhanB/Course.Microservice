@@ -1,5 +1,7 @@
 ﻿using Course.Web.Models;
 using Course.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Course.Web.Controllers
@@ -23,15 +25,22 @@ namespace Course.Web.Controllers
 
             var response = await _identityService.SigIn(model);
 
-            if(!response.IsSuccessful)
+            if (!response.IsSuccessful)
             {
                 response.Errors.ForEach(e =>
                 {
-                    ModelState.AddModelError(String.Empty,e);
+                    ModelState.AddModelError(String.Empty, e);
                 });
                 return View();
             }
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _identityService.RevokeRefreshToken();
             return RedirectToAction("Index", "Home");
         }
     }
