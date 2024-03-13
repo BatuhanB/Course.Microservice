@@ -1,3 +1,4 @@
+using Course.Web.Handler;
 using Course.Web.Models;
 using Course.Web.Services;
 using Course.Web.Services.Interfaces;
@@ -16,10 +17,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
+
+var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+builder.Services.AddHttpClient<IUserService, UserService>(opt =>
+{
+    opt.BaseAddress = new Uri(serviceApiSettings.IdentityUrl);
+}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 builder.Services.AddControllersWithViews();
 
