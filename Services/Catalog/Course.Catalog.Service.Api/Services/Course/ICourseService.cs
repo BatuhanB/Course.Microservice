@@ -1,4 +1,3 @@
-using Course.Catalog.Service.Api.Dtos;
 using Course.Catalog.Service.Api.Dtos.Course;
 using Course.Catalog.Service.Api.Services.Generic;
 using Course.Shared.Dtos;

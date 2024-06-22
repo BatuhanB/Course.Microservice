@@ -29,6 +29,17 @@ namespace Course.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200") // Update this with your Angular app's URL
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowCredentials(); // This is important for allowing cookies to be sent
+                    });
+            });
 
             services.AddLocalApiAuthentication();
 
@@ -84,6 +95,7 @@ namespace Course.IdentityServer
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("AllowSpecificOrigin");
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
