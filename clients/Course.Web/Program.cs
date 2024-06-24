@@ -1,7 +1,10 @@
 using Course.Web.Handler;
 using Course.Web.Models;
 using Course.Web.Services;
+using Course.Web.Services.Catalog.Categories;
+using Course.Web.Services.Catalog.Courses;
 using Course.Web.Services.Interfaces;
+using Course.Web.Services.Interfaces.Catalog;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,9 +27,17 @@ builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("Cli
 
 var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.CatalogApi.Path}");
+});
+builder.Services.AddHttpClient<ICourseService, CourseService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.CatalogApi.Path}");
+});
 builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
-    opt.BaseAddress = new Uri(serviceApiSettings.IdentityUrl);
+    opt.BaseAddress = new Uri(serviceApiSettings!.IdentityUrl);
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 builder.Services.AddControllersWithViews();
