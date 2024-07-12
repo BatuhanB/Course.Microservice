@@ -43,16 +43,17 @@ public class CourseService(IMapper mapper, IDatabaseSettings databaseSettings, I
 
     public async Task<Response<List<CourseWithCategoryDto>>> GetAllByUserIdWithCategory(Guid userId, CancellationToken cancellationToken)
     {
-        var courses = await _collection.Find(x=>true).ToListAsync(cancellationToken);
-        courses = courses.Where(x => x.UserId == userId.ToString()).ToList();
+        var courses = await _collection.Find(x => x.UserId == userId.ToString()).ToListAsync(cancellationToken);
 
-        courses = courses.SelectMany(course =>
+        var tasks = courses.Select(async course =>
         {
-            var category = _mapper.Map<Response<Models.Category>>(_categoryService.GetByIdAsync(course.CategoryId, cancellationToken).Result);
-            course.Category = category.Data ?? null;
-            return courses;
+            var categoryResponse = await _categoryService.GetByIdAsync(course.CategoryId, cancellationToken);
+            course.Category = _mapper.Map<Models.Category>(categoryResponse.Data);
+            return course;
         }).ToList();
-        
-        return Response<List<CourseWithCategoryDto>>.Success(_mapper.Map<List<CourseWithCategoryDto>>(courses), 200);
+
+        var completedResult = await Task.WhenAll(tasks);
+
+        return Response<List<CourseWithCategoryDto>>.Success(_mapper.Map<List<CourseWithCategoryDto>>(completedResult.ToList()), 200);
     }
 }

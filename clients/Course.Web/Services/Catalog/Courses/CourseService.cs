@@ -25,15 +25,18 @@ public class CourseService : ICourseService
 
     public async Task<IEnumerable<CourseViewModel>> GetAllAsync()
     {
-        var response = await _httpClient.GetAsync("courses/getallasync");
+        var response = await _httpClient.GetAsync("courses/getall");
         if (!response.IsSuccessStatusCode) { return []; }
         var courses = await response.Content.ReadFromJsonAsync<Response<IEnumerable<CourseViewModel>>>();
         return courses!.Data!;
     }
 
-    public Task<IEnumerable<CourseViewModel>> GetAllByUserIdAsync(string userId)
+    public async Task<IEnumerable<CourseWithCategoryViewModel>> GetAllByUserIdAsync(string userId)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync("courses/getallbyuseridwithcategory");
+        if (!response.IsSuccessStatusCode) { return []; }
+        var courses = await response.Content.ReadFromJsonAsync<Response<IEnumerable<CourseWithCategoryViewModel>>>();
+        return courses!.Data!;
     }
 
     public Task<CourseViewModel> GetById(string id)
