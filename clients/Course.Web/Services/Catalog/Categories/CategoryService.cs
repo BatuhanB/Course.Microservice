@@ -35,7 +35,7 @@ public class CategoryService : ICategoryService
 
     public async Task<CategoryViewModel> GetById(string categoryId)
     {
-        var response = await _httpClient.GetAsync("categories/getbyid");
+        var response = await _httpClient.GetAsync($"categories/getbyid/{categoryId}");
         if (!response.IsSuccessStatusCode) { return null; }
         var courses = await response.Content.ReadFromJsonAsync<Response<CategoryViewModel>>();
         return courses!.Data!;

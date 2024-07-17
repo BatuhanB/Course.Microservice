@@ -35,7 +35,7 @@ public class CourseService : ICourseService
 
     public async Task<IEnumerable<CourseWithCategoryViewModel>> GetAllByUserIdAsync(string userId)
     {
-        var response = await _httpClient.GetAsync("courses/getallbyuseridwithcategory");
+        var response = await _httpClient.GetAsync($"courses/getallbyuseridwithcategory/{userId}");
         if (!response.IsSuccessStatusCode) { return []; }
         var courses = await response.Content.ReadFromJsonAsync<Response<IEnumerable<CourseWithCategoryViewModel>>>();
         return courses!.Data!;
@@ -43,7 +43,7 @@ public class CourseService : ICourseService
 
     public async Task<CourseViewModel> GetById(string id)
     {
-        var response = await _httpClient.GetAsync("courses/getbyid");
+        var response = await _httpClient.GetAsync($"courses/getbyid/{id}");
         if (!response.IsSuccessStatusCode) { return null; }
         var courses = await response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
         return courses!.Data!;

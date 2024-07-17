@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@model IEnumerable<CourseWithCategoryViewModel>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h3 class="card-title">Courses</h3>
+            <div class="card-body">
+                @if (Model.Any())
+                {
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Length</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ToList())
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Feature?.Duration</td>
+                                    <td>@item.Category!.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        No Course Has Found
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

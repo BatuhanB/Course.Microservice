@@ -4,13 +4,13 @@ namespace Course.Shared.Dtos;
 
 public class Response<T>
 {
-    public T? Data { get; private set; }
+    public T? Data { get; set; }
 
-    [JsonIgnore] public int StatusCode { get; private set; }
+    [JsonIgnore] public int StatusCode { get; set; }
 
-    public bool IsSuccessful { get; private set; }
+    public bool IsSuccessful { get; set; }
 
-    public List<string> Errors { get; private set; } = [];
+    public List<string> Errors { get; set; } = [];
 
     public static Response<T> Success(T data, int statusCode)
     {

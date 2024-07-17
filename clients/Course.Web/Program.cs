@@ -1,3 +1,4 @@
+using Course.Shared.Services;
 using Course.Web.Handler;
 using Course.Web.Models;
 using Course.Web.Services;
@@ -21,6 +22,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+builder.Services.AddScoped<ClientCredentialTokenHandler>();
+
+builder.Services.AddAccessTokenManagement();
+
+builder.Services.AddScoped<ISharedIdentityService,SharedIdentityService>();
 
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
@@ -29,12 +35,16 @@ var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>
 {
-    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.CatalogApi.Path}");
-});
+    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.Catalog.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
 builder.Services.AddHttpClient<ICourseService, CourseService>(opt =>
 {
-    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.CatalogApi.Path}");
-});
+    opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.Catalog.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>(); ;
+
+builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+
 builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(serviceApiSettings!.IdentityUrl);
