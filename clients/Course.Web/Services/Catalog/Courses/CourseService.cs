@@ -13,14 +13,16 @@ public class CourseService : ICourseService
         _httpClient = httpClient;
     }
 
-    public Task<bool> CreateAsync(CourseCreateInput model)
+    public async Task<bool> CreateAsync(CourseCreateInput model)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("courses/create", model);
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PutAsJsonAsync("courses/delete", id);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<IEnumerable<CourseViewModel>> GetAllAsync()
@@ -39,13 +41,17 @@ public class CourseService : ICourseService
         return courses!.Data!;
     }
 
-    public Task<CourseViewModel> GetById(string id)
+    public async Task<CourseViewModel> GetById(string id)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync("courses/getbyid");
+        if (!response.IsSuccessStatusCode) { return null; }
+        var courses = await response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
+        return courses!.Data!;
     }
 
-    public Task<bool> UpdateAsync(CourseUpdateInput model)
+    public async Task<bool> UpdateAsync(CourseUpdateInput model)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("courses/update", model);
+        return response.IsSuccessStatusCode;
     }
 }

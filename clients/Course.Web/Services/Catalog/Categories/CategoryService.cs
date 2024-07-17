@@ -1,6 +1,5 @@
 ﻿using Course.Shared.Dtos;
 using Course.Web.Models.Catalog.Categories;
-using Course.Web.Models.Catalog.Courses;
 using Course.Web.Services.Interfaces.Catalog;
 
 namespace Course.Web.Services.Catalog.Categories;
@@ -14,14 +13,16 @@ public class CategoryService : ICategoryService
         _httpClient = httpClient;
     }
 
-    public Task<bool> CreateAsync(CategoryCreateInput model)
+    public async Task<bool> CreateAsync(CategoryCreateInput model)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("categories/create", model);
+        return response.IsSuccessStatusCode;
     }
 
-    public Task<bool> DeleteAsync(string categoryId)
+    public async Task<bool> DeleteAsync(string categoryId)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PutAsJsonAsync("categories/delete", categoryId);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<IEnumerable<CategoryViewModel>> GetAllAsync()
@@ -32,13 +33,17 @@ public class CategoryService : ICategoryService
         return courses!.Data!;
     }
 
-    public Task<CategoryViewModel> GetById(string categoryId)
+    public async Task<CategoryViewModel> GetById(string categoryId)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.GetAsync("categories/getbyid");
+        if (!response.IsSuccessStatusCode) { return null; }
+        var courses = await response.Content.ReadFromJsonAsync<Response<CategoryViewModel>>();
+        return courses!.Data!;
     }
 
-    public Task<bool> UpdateAsync(CategoryUpdateInput model)
+    public async Task<bool> UpdateAsync(CategoryUpdateInput model)
     {
-        throw new NotImplementedException();
+        var response = await _httpClient.PostAsJsonAsync("categories/update", model);
+        return response.IsSuccessStatusCode;
     }
 }
