@@ -16,7 +16,7 @@ public class CourseCreateInput
     public string? UserId { get; set; }
 
     public FeatureViewModel? Feature { get; set; }
-    public Guid CategoryId { get; set; }
+    public string CategoryId { get; set; }
 
     public CategoryViewModel? Category { get; set; }
 }

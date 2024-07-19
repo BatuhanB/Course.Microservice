@@ -1,4 +1,3 @@
-using Course.Catalog.Service.Api.Dtos.Category;
 using Course.Catalog.Service.Api.Services.Category;
 using Course.Shared.BaseController;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +22,8 @@ public class CategoriesController(ICategoryService categoryService) : BaseContro
         return CreateActionResultInstance(result);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
         var result = await categoryService.GetByIdAsync(id, cancellationToken);
         return CreateActionResultInstance(result);
@@ -44,8 +43,8 @@ public class CategoriesController(ICategoryService categoryService) : BaseContro
         return CreateActionResultInstance(result);
     }
 
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(string id, CancellationToken cancellationToken)
     {
         var result = await categoryService.DeleteAsync(id, cancellationToken);
         return CreateActionResultInstance(result);

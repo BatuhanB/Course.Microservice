@@ -51,7 +51,7 @@ public class CourseService : ICourseService
 
     public async Task<bool> UpdateAsync(CourseUpdateInput model)
     {
-        var response = await _httpClient.PostAsJsonAsync("courses/update", model);
+        var response = await _httpClient.PutAsJsonAsync("courses/update", model);
         return response.IsSuccessStatusCode;
     }
 }

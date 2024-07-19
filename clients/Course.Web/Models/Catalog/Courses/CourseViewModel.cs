@@ -5,7 +5,7 @@ namespace Course.Web.Models.Catalog.Courses;
 
 public class CourseViewModel
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 
     public DateTime CreatedDate { get; set; }
     public required string Name { get; set; }
@@ -20,6 +20,6 @@ public class CourseViewModel
 
     public FeatureViewModel? Feature { get; set; }
 
-    public Guid CategoryId { get; set; }
+    public string CategoryId { get; set; }
     public CategoryViewModel? Category { get; set; }
 }

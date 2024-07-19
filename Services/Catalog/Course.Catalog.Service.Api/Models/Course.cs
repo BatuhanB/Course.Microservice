@@ -18,9 +18,8 @@ public class Course : BaseEntity
     public string? UserId { get; set; }
 
     public Feature? Feature { get; set; }
-    public Guid CategoryId{ get; set; }
+    public string CategoryId{ get; set; }
     
     [BsonIgnore]
-    [JsonIgnore]
     public Category? Category{ get; set; }
 }

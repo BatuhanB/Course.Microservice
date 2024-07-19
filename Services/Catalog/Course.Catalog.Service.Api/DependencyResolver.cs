@@ -3,6 +3,8 @@ using Course.Catalog.Service.Api.Services.Course;
 using Course.Catalog.Service.Api.Services.Generic;
 using Course.Catalog.Service.Api.Settings;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson;
 
 namespace Course.Catalog.Service.Api;
 
@@ -17,6 +19,9 @@ public static class DependencyResolver
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ICourseService, CourseService>();
         services.AddAutoMapper(assembly);
+
+        MongoDB.Bson.Serialization.BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+
         return services;
     }
 }

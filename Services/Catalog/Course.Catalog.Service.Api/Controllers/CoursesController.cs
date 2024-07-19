@@ -22,22 +22,22 @@ public class CoursesController(ICourseService courseService) : BaseController
         return CreateActionResultInstance(result);
     }
 
-    [HttpGet("{userId:guid}")]
-    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(Guid userId, CancellationToken cancellationToken)
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId, CancellationToken cancellationToken)
     {
         var result = await courseService.GetAllByUserIdWithCategory(userId, cancellationToken);
         return CreateActionResultInstance(result);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
         var result = await courseService.GetByIdAsync(id, cancellationToken);
         return CreateActionResultInstance(result);
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetByIdWithCategoryAsync(Guid id, CancellationToken cancellationToken)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdWithCategoryAsync(string id, CancellationToken cancellationToken)
     {
         var result = await courseService.GetByIdWithCategory(id, cancellationToken);
         return CreateActionResultInstance(result);
@@ -57,8 +57,8 @@ public class CoursesController(ICourseService courseService) : BaseController
         return CreateActionResultInstance(result);
     }
     
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteAsync(Guid id,CancellationToken cancellationToken)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(string id,CancellationToken cancellationToken)
     {
         var result = await courseService.DeleteAsync(id, cancellationToken);
         return CreateActionResultInstance(result);

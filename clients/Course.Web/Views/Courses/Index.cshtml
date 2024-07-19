@@ -28,6 +28,7 @@
                                 <th>Description</th>
                                 <th>Length</th>
                                 <th>Category</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +40,7 @@
                                     <td>@item.Description</td>
                                     <td>@item.Feature?.Duration</td>
                                     <td>@item.Category?.Name</td>
+                                    <td><a class="btn btn-outline-warning" asp-action="Update" asp-controller="Courses" asp-route-courseId="@item.Id">Update</a></td>
                                 </tr>
                             }
                         </tbody>

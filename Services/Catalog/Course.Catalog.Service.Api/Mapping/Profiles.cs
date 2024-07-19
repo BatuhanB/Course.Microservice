@@ -14,7 +14,6 @@ public class Profiles : Profile
     {
         CreateMap<Models.Course, CourseDto>()
             .ForMember("Feature",x=>x.Ignore())
-            .ForMember("Category",x=>x.Ignore())
             .ReverseMap();
         
         CreateMap<Response<Category>, Response<CategoryDto>>().ReverseMap();

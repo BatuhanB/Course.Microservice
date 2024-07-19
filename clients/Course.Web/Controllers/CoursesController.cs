@@ -55,4 +55,42 @@ public class CoursesController : Controller
         }
         return RedirectToAction(nameof(Index));
     }
+
+    public async Task<IActionResult> Update(string courseId)
+    {
+        var categories = await _categoryService.GetAllAsync();
+        ViewBag.Categories = new SelectList(categories, "Id", "Name");
+        var course = await _courseService.GetById(courseId);
+
+        var updateCourse = new CourseUpdateInput
+        {
+            Id = course.Id,
+            Name = course.Name,
+            Description = course.Description,
+            CategoryId = course.CategoryId,
+            Feature = course.Feature,
+            Price = course.Price,
+            Image = course.Image,
+            UserId = course.UserId
+        };
+        return View(updateCourse);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Update(CourseUpdateInput model)
+    {
+        var categories = await _categoryService.GetAllAsync();
+        ViewBag.Categories = new SelectList(categories, "Id", "Name", model.CategoryId);
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+
+        var result = await _courseService.UpdateAsync(model);
+
+        if (result)
+        {
+            ViewBag.Result = "Course has been successfully updated";
+        }
+        return RedirectToAction(nameof(Index));
+    }
 }

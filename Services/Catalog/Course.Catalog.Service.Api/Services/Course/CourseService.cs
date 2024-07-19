@@ -1,6 +1,7 @@
 using AutoMapper;
 using Course.Catalog.Service.Api.Dtos.Category;
 using Course.Catalog.Service.Api.Dtos.Course;
+using Course.Catalog.Service.Api.Models;
 using Course.Catalog.Service.Api.Services.Category;
 using Course.Catalog.Service.Api.Services.Generic;
 using Course.Catalog.Service.Api.Settings;
@@ -29,7 +30,7 @@ public class CourseService(IMapper mapper, IDatabaseSettings databaseSettings, I
         return Response<List<CourseWithCategoryDto>>.Success(courses, 200);
     }
 
-    public async Task<Response<CourseWithCategoryDto>> GetByIdWithCategory(Guid id, CancellationToken cancellationToken)
+    public async Task<Response<CourseWithCategoryDto>> GetByIdWithCategory(string id, CancellationToken cancellationToken)
     {
         var courses = await _collection.Find(x=>true).ToListAsync(cancellationToken);
         var course = courses.FirstOrDefault(x => x.Id == id);
@@ -41,7 +42,7 @@ public class CourseService(IMapper mapper, IDatabaseSettings databaseSettings, I
         return Response<CourseWithCategoryDto>.Success(_mapper.Map<CourseWithCategoryDto>(course),200);
     }
 
-    public async Task<Response<List<CourseWithCategoryDto>>> GetAllByUserIdWithCategory(Guid userId, CancellationToken cancellationToken)
+    public async Task<Response<List<CourseWithCategoryDto>>> GetAllByUserIdWithCategory(string userId, CancellationToken cancellationToken)
     {
         var courses = await _collection.Find(x => x.UserId == userId.ToString()).ToListAsync(cancellationToken);
 

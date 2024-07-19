@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Update";
+}
+
+@model CourseUpdateInput;
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-Title">Update Course</h5>
+                <form method="post" asp-controller="Courses" asp-action="Update" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" asp-for="UserId"/>
+                    <input type="hidden" asp-for="Id"/>
+                    <input type="hidden" asp-for="Image"/>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label" asp-for="CategoryId">Category</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" asp-items="@ViewBag.Categories" asp-for="CategoryId">
+                                <option value="">Select Category</option>
+                                <option value="@Model.CategoryId">Select Category</option>
+                            </select>
+                        </div>
+                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="name" asp-for="Name" value="@Model.Name">
+                        </div>
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="Price" class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="Price" asp-for="Price" value="@Model.Price">
+                        </div>
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="Description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="Description" asp-for="Description" value="@Model.Description"></textarea>
+                        </div>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="Feature" class="col-sm-2 col-form-label">Duration</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="Feature" asp-for="Feature.Duration" value="@Model.Feature.Duration">
+                        </div>
+                        <span class="text-danger" asp-validation-for="Feature.Duration"></span>
+                    </div>
+
+                    <button class="btn btn-outline-primary" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

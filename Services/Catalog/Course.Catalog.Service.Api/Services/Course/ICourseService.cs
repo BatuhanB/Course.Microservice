@@ -7,6 +7,6 @@ namespace Course.Catalog.Service.Api.Services.Course;
 public interface ICourseService : IGenericService<CourseDto, Models.Course>
 {
     Task<Response<List<CourseWithCategoryDto>>> GetAllWithCategoryAsync(CancellationToken cancellationToken);
-    Task<Response<CourseWithCategoryDto>> GetByIdWithCategory(Guid id,CancellationToken cancellationToken);
-    Task<Response<List<CourseWithCategoryDto>>> GetAllByUserIdWithCategory(Guid userId,CancellationToken cancellationToken);
+    Task<Response<CourseWithCategoryDto>> GetByIdWithCategory(string id,CancellationToken cancellationToken);
+    Task<Response<List<CourseWithCategoryDto>>> GetAllByUserIdWithCategory(string userId,CancellationToken cancellationToken);
 }

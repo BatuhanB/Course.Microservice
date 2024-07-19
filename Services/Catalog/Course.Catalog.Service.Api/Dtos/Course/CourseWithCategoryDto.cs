@@ -22,7 +22,7 @@ public class CourseWithCategoryDto : BaseDto
     public FeatureDto? Feature { get; set; }
     
     [JsonIgnore]
-    public Guid CategoryId{ get; set; }
+    public string CategoryId{ get; set; }
     
     public CategoryDto? Category{ get; set; }
 }
