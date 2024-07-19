@@ -41,7 +41,7 @@ builder.Services.AddHttpClient<ICategoryService, CategoryService>(opt =>
 builder.Services.AddHttpClient<ICourseService, CourseService>(opt =>
 {
     opt.BaseAddress = new Uri($"{serviceApiSettings!.BaseUrl}{serviceApiSettings.Catalog.Path}");
-}).AddHttpMessageHandler<ClientCredentialTokenHandler>(); ;
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 

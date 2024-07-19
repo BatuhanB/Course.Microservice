@@ -8,7 +8,15 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <h3 class="card-title">Courses</h3>
+            <h3 class="card-title text-center">Courses</h3>
+                <a asp-controller="Courses" asp-action="Create" class="btn btn-outline-primary mb-3">Add Course</a>
+
+            @if (ViewBag.Result != null)
+            {
+                <div class="alert alert-success text-center" role="alert">
+                    <h2>@ViewBag.Result</h2>
+                </div>
+            }
             <div class="card-body">
                 @if (Model.Any())
                 {
@@ -30,7 +38,7 @@
                                     <td>@item.Price</td>
                                     <td>@item.Description</td>
                                     <td>@item.Feature?.Duration</td>
-                                    <td>@item.Category!.Name</td>
+                                    <td>@item.Category?.Name</td>
                                 </tr>
                             }
                         </tbody>
