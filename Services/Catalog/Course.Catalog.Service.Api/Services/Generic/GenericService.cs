@@ -40,6 +40,7 @@ public class GenericService<TResult, TEntity> : IGenericService<TResult, TEntity
 
     public async Task<Response<NoContent>> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
     {
+        entity.CreatedDate = DateTime.Now;
         var result = await _collection.FindOneAndReplaceAsync(x => x.Id == entity.Id, entity, cancellationToken: cancellationToken);
         return result is null ?
             Response<NoContent>.Fail($"{typeof(TEntity)} has not found!", 404) :

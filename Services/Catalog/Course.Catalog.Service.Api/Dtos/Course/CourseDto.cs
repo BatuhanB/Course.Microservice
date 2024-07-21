@@ -1,8 +1,6 @@
-using Course.Catalog.Service.Api.Dtos.Category;
 using Course.Catalog.Service.Api.Dtos.Feature;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Text.Json.Serialization;
 
 namespace Course.Catalog.Service.Api.Dtos.Course;
 

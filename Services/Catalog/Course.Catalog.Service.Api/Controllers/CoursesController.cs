@@ -1,6 +1,8 @@
+using Course.Catalog.Service.Api.Models;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Course.Catalog.Service.Api.Controllers;
 
@@ -51,8 +53,12 @@ public class CoursesController(ICourseService courseService) : BaseController
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromBody] Models.Course dto,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromForm] Models.Course dto,CancellationToken cancellationToken)
     {
+        if (Request.Form.TryGetValue("feature", out var featureJson))
+        {
+            dto.Feature = JsonConvert.DeserializeObject<Feature>(featureJson);
+        }
         var result = await courseService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);
     }
