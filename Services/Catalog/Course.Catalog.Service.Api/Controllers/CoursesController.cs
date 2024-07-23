@@ -18,14 +18,14 @@ public class CoursesController(ICourseService courseService) : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllWithCategoryAsync(PageRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllWithCategoryAsync([FromQuery] PageRequest request, CancellationToken cancellationToken)
     {
         var result = await courseService.GetAllWithCategoryAsync(request,cancellationToken);
         return CreateActionResultInstance(result);
     }
 
     [HttpGet("{userId}")]
-    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId, PageRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId,[FromQuery] PageRequest request, CancellationToken cancellationToken)
     {
         var result = await courseService.GetAllByUserIdWithCategory(userId, request, cancellationToken);
         return CreateActionResultInstance(result);

@@ -12,7 +12,7 @@ public class PagedList<T>
 
     public PagedList(List<T> items, int pageNumber, int pageSize)
     {
-        Items = items.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+        Items = items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
         TotalCount = items.Count;
         TotalPages = (int)Math.Ceiling(TotalCount / (double)pageSize);
         PageSize = pageSize;
