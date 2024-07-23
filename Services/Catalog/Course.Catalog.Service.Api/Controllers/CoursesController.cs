@@ -1,8 +1,8 @@
 using Course.Catalog.Service.Api.Models;
+using Course.Catalog.Service.Api.Models.Paging;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Course.Catalog.Service.Api.Controllers;
 
@@ -18,16 +18,16 @@ public class CoursesController(ICourseService courseService) : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllWithCategoryAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllWithCategoryAsync(PageRequest request, CancellationToken cancellationToken)
     {
-        var result = await courseService.GetAllWithCategoryAsync(cancellationToken);
+        var result = await courseService.GetAllWithCategoryAsync(request,cancellationToken);
         return CreateActionResultInstance(result);
     }
 
     [HttpGet("{userId}")]
-    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId, PageRequest request, CancellationToken cancellationToken)
     {
-        var result = await courseService.GetAllByUserIdWithCategory(userId, cancellationToken);
+        var result = await courseService.GetAllByUserIdWithCategory(userId, request, cancellationToken);
         return CreateActionResultInstance(result);
     }
 
@@ -46,25 +46,21 @@ public class CoursesController(ICourseService courseService) : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] Models.Course course,CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] Models.Course course, CancellationToken cancellationToken)
     {
         var result = await courseService.CreateAsync(course, cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromForm] Models.Course dto,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] Models.Course dto, CancellationToken cancellationToken)
     {
-        if (Request.Form.TryGetValue("feature", out var featureJson))
-        {
-            dto.Feature = JsonConvert.DeserializeObject<Feature>(featureJson);
-        }
         var result = await courseService.UpdateAsync(dto, cancellationToken);
         return CreateActionResultInstance(result);
     }
-    
+
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(string id,CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(string id, CancellationToken cancellationToken)
     {
         var result = await courseService.DeleteAsync(id, cancellationToken);
         return CreateActionResultInstance(result);
