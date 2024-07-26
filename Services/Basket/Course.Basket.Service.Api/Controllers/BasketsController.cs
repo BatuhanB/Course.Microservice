@@ -28,6 +28,7 @@ namespace Course.Order.Service.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveOrUpdate(BasketDto basket)
         {
+            basket.UserId = _identityService.GetUserId;
             var response = await _basketService.SaveOrUpdate(basket);
             return CreateActionResultInstance(response);
         }

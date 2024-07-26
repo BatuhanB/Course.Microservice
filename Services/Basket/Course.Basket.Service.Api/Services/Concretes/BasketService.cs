@@ -17,7 +17,7 @@ public class BasketService(RedisService redisService) : IBasketService
     public async Task<Response<BasketDto>> Get(string userId)
     {
         var basket = await _redisService.GetDb().StringGetAsync(userId);
-        if(String.IsNullOrEmpty(basket))
+        if (String.IsNullOrEmpty(basket))
         {
             return Response<BasketDto>.Fail("Basket not Found!", 404);
         }
@@ -27,6 +27,6 @@ public class BasketService(RedisService redisService) : IBasketService
     public async Task<Response<bool>> SaveOrUpdate(BasketDto basket)
     {
         var status = await _redisService.GetDb().StringSetAsync(basket.UserId, JsonSerializer.Serialize(basket));
-        return status ? Response<bool>.Success(204) : Response<bool>.Fail("Basket could not update or save", 500);
+        return status ? Response<bool>.Success(true, 200) : Response<bool>.Fail("Basket could not update or save", 500);
     }
 }
