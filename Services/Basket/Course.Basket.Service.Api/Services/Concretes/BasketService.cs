@@ -11,7 +11,7 @@ public class BasketService(RedisService redisService) : IBasketService
     public async Task<Response<bool>> Delete(string userId)
     {
         var status = await _redisService.GetDb().KeyDeleteAsync(userId);
-        return status ? Response<bool>.Success(204) : Response<bool>.Fail("Basket not found", 404);
+        return status ? Response<bool>.Success(true,200) : Response<bool>.Fail("Basket not found", 404);
     }
 
     public async Task<Response<BasketDto>> Get(string userId)
