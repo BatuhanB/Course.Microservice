@@ -43,7 +43,7 @@ public class DiscountService : IDiscountService
 
     public async Task<Response<Models.Discount>> GetByCodeAndUserIdAsync(string code, string userId)
     {
-        var discount = await _connection.QueryFirstAsync<Models.Discount>(Queries.GetDiscountByCodeAndUserId, new
+        var discount = await _connection.QueryFirstOrDefaultAsync<Models.Discount>(Queries.GetDiscountByCodeAndUserId, new
         {
             @code = code,
             @userId = userId
