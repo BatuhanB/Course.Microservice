@@ -5,4 +5,5 @@ public class BasketItemDto
     public required string CourseId { get; set; }
     public required string CourseName { get; set; }
     public required decimal Price { get; set; }
+    public required decimal PriceWithDiscount { get; set; }
 }

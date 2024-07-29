@@ -19,7 +19,7 @@ public class BasketService(RedisService redisService) : IBasketService
         var basket = await _redisService.GetDb().StringGetAsync(userId);
         if (String.IsNullOrEmpty(basket))
         {
-            return Response<BasketDto>.Fail("Basket not Found!", 404);
+            return Response<BasketDto>.Fail("Basket not Found!", 200);
         }
         return Response<BasketDto>.Success(JsonSerializer.Deserialize<BasketDto>(basket), 200);
     }
