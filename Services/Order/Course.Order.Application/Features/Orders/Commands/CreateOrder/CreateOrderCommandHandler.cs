@@ -15,23 +15,6 @@ public class CreateOrderCommandHandler(IWriteRepository<Domain.OrderAggregate.Or
 
     public async Task<Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        var validator = new CreateOrderCommandValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-
-        if (validationResult.Errors.Count > 0)
-        {
-            var errors = new List<string>();
-            validationResult.Errors.ForEach(x =>
-            {
-                errors.Add(x.ErrorMessage);
-            });
-            return Response<CreatedOrderDto>.Fail(errors, 500);
-        }
-
-        if (!validationResult.IsValid)
-        {
-            return Response<CreatedOrderDto>.Fail(OrderConstants.CreatedOrderNotValid, 500);
-        }
         var mappedOrder = _mapper.Map<Domain.OrderAggregate.Order>(request);
 
         var result = await _writeRepository.AddAsync(mappedOrder, cancellationToken);
