@@ -1,3 +1,4 @@
+using Course.Order.API.Middlewares;
 using Course.Order.Application;
 using Course.Order.Infrastructure;
 using Course.Shared.Services;
@@ -38,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandler>();
 
 app.UseAuthentication();
 
