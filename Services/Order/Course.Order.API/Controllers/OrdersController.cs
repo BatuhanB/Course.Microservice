@@ -1,4 +1,5 @@
-﻿using Course.Order.Application.Features.Orders.Commands.CreateOrder;
+﻿using Course.Order.Application.Contracts.Request;
+using Course.Order.Application.Features.Orders.Commands.CreateOrder;
 using Course.Order.Application.Features.Orders.Queries.GetOrdersByUserId;
 using Course.Shared.BaseController;
 using Course.Shared.Services;
@@ -15,9 +16,9 @@ public class OrdersController(ISharedIdentityService identityService) : BaseCont
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
     [HttpGet]
-    public async Task<IActionResult> Get(int page, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Get(PageRequest request, CancellationToken cancellationToken = default)
     {
-        var result = await Mediator.Send(new GetOrdersByUserIdQuery(_identityService.GetUserId, new(page, pageSize)), cancellationToken);
+        var result = await Mediator.Send(new GetOrdersByUserIdQuery(_identityService.GetUserId, request), cancellationToken);
 
         return CreateActionResultInstance(result);
     }

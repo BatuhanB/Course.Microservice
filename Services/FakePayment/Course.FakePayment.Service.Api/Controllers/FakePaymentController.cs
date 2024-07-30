@@ -1,4 +1,5 @@
-﻿using Course.Shared.BaseController;
+﻿using Course.FakePayment.Service.Api.Models;
+using Course.Shared.BaseController;
 using Course.Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,10 @@ namespace Course.FakePayment.Service.Api.Controllers
     [ApiController]
     public class FakePaymentController : BaseController
     {
-        [HttpGet]
-        public IActionResult ReceivePayment()
+        [HttpPost]
+        public IActionResult ReceivePayment([FromBody] PaymentDto payment)
         {
-            return CreateActionResultInstance(Response<NoContent>.Success(200));
+            return CreateActionResultInstance(Response<PaymentDto>.Success(200));
         }
     }
 }
