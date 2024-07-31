@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddApplicationDependency();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
@@ -40,7 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionHandler>();
+app.UseExceptionHandler(_ => { });
 
 app.UseAuthentication();
 
