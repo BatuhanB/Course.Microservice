@@ -1,9 +1,9 @@
 ﻿namespace Course.Shared.Messages;
-public class CreateOrderCommandMessage
+public class CreateOrderMessageCommand
 {
     public Address Address { get; set; }
     public string BuyerId { get; set; }
-    public List<OrderItem> OrderItems { get; set; }
+    public List<OrderItem> OrderItems { get; set; } = [];
 }
 
 public class Address

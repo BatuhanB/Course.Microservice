@@ -1,10 +1,13 @@
 using Course.Order.API.Middlewares;
 using Course.Order.Application;
+using Course.Order.Application.Consumers;
 using Course.Order.Infrastructure;
 using Course.Shared.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +31,24 @@ builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
 });
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:URL"], "/", host =>
+        {
+            host.Username(builder.Configuration["RabbitMQ:UserName"]!);
+            host.Password(builder.Configuration["RabbitMQ:Password"]!);
+        });
+        cfg.ReceiveEndpoint("create-orderq", e =>
+        {
+            e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+        });
+    });
+});
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();

@@ -8,6 +8,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<Domain.OrderAggregate.Address, Shared.Messages.Address>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Order, Dtos.OrderDto>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Order, CreateOrderCommand>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Order, Dtos.CreatedOrderDto>().ReverseMap();

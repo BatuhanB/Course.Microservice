@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Course.Order.Application.Contracts;
 using Course.Order.Application.Dtos;
-using Course.Order.Application.Features.Orders.Constants;
-using Course.Order.Domain.OrderAggregate;
 using Course.Shared.Dtos;
 using MediatR;
 
