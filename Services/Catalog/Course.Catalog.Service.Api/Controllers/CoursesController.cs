@@ -1,15 +1,18 @@
-using Course.Catalog.Service.Api.Models;
 using Course.Catalog.Service.Api.Models.Paging;
 using Course.Catalog.Service.Api.Services.Course;
 using Course.Shared.BaseController;
+using Course.Shared.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Course.Catalog.Service.Api.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class CoursesController(ICourseService courseService) : BaseController
+public class CoursesController(ICourseService courseService, IPublishEndpoint publishEndpoint) : BaseController
 {
+    private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+
     [HttpGet]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -20,12 +23,12 @@ public class CoursesController(ICourseService courseService) : BaseController
     [HttpGet]
     public async Task<IActionResult> GetAllWithCategoryAsync([FromQuery] PageRequest request, CancellationToken cancellationToken)
     {
-        var result = await courseService.GetAllWithCategoryAsync(request,cancellationToken);
+        var result = await courseService.GetAllWithCategoryAsync(request, cancellationToken);
         return CreateActionResultInstance(result);
     }
 
     [HttpGet("{userId}")]
-    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId,[FromQuery] PageRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserIdWithCategoryAsync(string userId, [FromQuery] PageRequest request, CancellationToken cancellationToken)
     {
         var result = await courseService.GetAllByUserIdWithCategory(userId, request, cancellationToken);
         return CreateActionResultInstance(result);
@@ -56,6 +59,13 @@ public class CoursesController(ICourseService courseService) : BaseController
     public async Task<IActionResult> UpdateAsync([FromBody] Models.Course dto, CancellationToken cancellationToken)
     {
         var result = await courseService.UpdateAsync(dto, cancellationToken);
+        await _publishEndpoint.Publish<CourseNameUpdatedEvent>(
+            new CourseNameUpdatedEvent
+            {
+                CourseId = dto.Id,
+                CourseName = dto.Name
+            }, cancellationToken);
+
         return CreateActionResultInstance(result);
     }
 

@@ -17,7 +17,7 @@ namespace Course.PhotoStock.Service.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> Save(IFormFile? file, CancellationToken cancellationToken)
         {
             var fileDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "photos");
 

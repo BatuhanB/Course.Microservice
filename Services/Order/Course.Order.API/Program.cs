@@ -7,7 +7,6 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,12 +34,17 @@ builder.Services.AddControllers(opt =>
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    x.AddConsumer<CourseUpdatedEventConsumer>();
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(builder.Configuration["RabbitMQ:URL"], "/", host =>
         {
             host.Username(builder.Configuration["RabbitMQ:UserName"]!);
             host.Password(builder.Configuration["RabbitMQ:Password"]!);
+        });
+        cfg.ReceiveEndpoint("update-order-item-nameq", e =>
+        {
+            e.ConfigureConsumer<CourseUpdatedEventConsumer>(context);
         });
         cfg.ReceiveEndpoint("create-orderq", e =>
         {

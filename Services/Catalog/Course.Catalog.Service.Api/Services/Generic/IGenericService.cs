@@ -1,12 +1,12 @@
-using Course.Shared.Dtos;
+using Res = Course.Shared.Dtos;
 
 namespace Course.Catalog.Service.Api.Services.Generic;
 
 public interface IGenericService<TResult, TEntity>
 {
-    Task<Response<List<TResult>>> GetAllAsync(CancellationToken cancellationToken);
-    Task<Response<TResult>> CreateAsync(TEntity entity, CancellationToken cancellationToken);
-    Task<Response<NoContent>> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
-    Task<Response<NoContent>> DeleteAsync(string id, CancellationToken cancellationToken);
-    Task<Response<TResult>> GetByIdAsync(string id, CancellationToken cancellationToken);
+    Task<Res.Response<List<TResult>>> GetAllAsync(CancellationToken cancellationToken);
+    Task<Res.Response<TResult>> CreateAsync(TEntity entity, CancellationToken cancellationToken);
+    Task<Res.Response<Res.NoContent>> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+    Task<Res.Response<Res.NoContent>> DeleteAsync(string id, CancellationToken cancellationToken);
+    Task<Res.Response<TResult>> GetByIdAsync(string id, CancellationToken cancellationToken);
 }

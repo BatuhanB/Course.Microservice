@@ -1,4 +1,5 @@
 using Course.Catalog.Service.Api;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
@@ -10,6 +11,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.Authority = builder.Configuration["Token:Issuer"];
         options.Audience = builder.Configuration["Token:Audience"];
     });
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:URL"], "/", host =>
+        {
+            host.Username(builder.Configuration["RabbitMQ:UserName"]!);
+            host.Password(builder.Configuration["RabbitMQ:Password"]!);
+        });
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
 
 builder.Services.AddControllers(opt =>
 {
