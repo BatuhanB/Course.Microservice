@@ -1,7 +1,9 @@
+using Course.Basket.Service.Api.Consumers;
 using Course.Order.Service.Api.Services.Concretes;
 using Course.Order.Service.Api.Services.Contracts;
 using Course.Order.Service.Api.Settings;
 using Course.Shared.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -15,6 +17,24 @@ builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 
 var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<BasketCourseNameUpdatedEventConsumer>();
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQ:URL"], "/", host =>
+        {
+            host.Username(builder.Configuration["RabbitMQ:UserName"]!);
+            host.Password(builder.Configuration["RabbitMQ:Password"]!);
+        });
+        cfg.ReceiveEndpoint("update-basket-item-nameq", e =>
+        {
+            e.ConfigureConsumer<BasketCourseNameUpdatedEventConsumer>(context);
+        });
+    });
+});
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

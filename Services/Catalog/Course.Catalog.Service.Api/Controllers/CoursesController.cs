@@ -66,6 +66,14 @@ public class CoursesController(ICourseService courseService, IPublishEndpoint pu
                 CourseName = dto.Name
             }, cancellationToken);
 
+        await _publishEndpoint.Publish<BasketCourseNameUpdatedEvent>(
+            new BasketCourseNameUpdatedEvent
+            {
+                UserId = dto.UserId,
+                CourseId = dto.Id,
+                CourseName = dto.Name
+            }, cancellationToken);
+
         return CreateActionResultInstance(result);
     }
 
