@@ -59,12 +59,21 @@ public class CoursesController(ICourseService courseService, IPublishEndpoint pu
     public async Task<IActionResult> UpdateAsync([FromBody] Models.Course dto, CancellationToken cancellationToken)
     {
         var result = await courseService.UpdateAsync(dto, cancellationToken);
+        if (result.IsSuccessful)
+        {
+            await SendEvents(dto, cancellationToken);
+        }
+        return CreateActionResultInstance(result);
+    }
+
+    private async Task SendEvents(Models.Course dto, CancellationToken cancellationToken)
+    {
         await _publishEndpoint.Publish<CourseNameUpdatedEvent>(
-            new CourseNameUpdatedEvent
-            {
-                CourseId = dto.Id,
-                CourseName = dto.Name
-            }, cancellationToken);
+        new CourseNameUpdatedEvent
+        {
+            CourseId = dto.Id,
+            CourseName = dto.Name
+        }, cancellationToken);
 
         await _publishEndpoint.Publish<BasketCourseNameUpdatedEvent>(
             new BasketCourseNameUpdatedEvent
@@ -73,8 +82,6 @@ public class CoursesController(ICourseService courseService, IPublishEndpoint pu
                 CourseId = dto.Id,
                 CourseName = dto.Name
             }, cancellationToken);
-
-        return CreateActionResultInstance(result);
     }
 
     [HttpDelete("{id}")]
