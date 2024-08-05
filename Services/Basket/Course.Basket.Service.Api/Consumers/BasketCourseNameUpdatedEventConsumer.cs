@@ -19,13 +19,16 @@ public class BasketCourseNameUpdatedEventConsumer(
         {
             _logger.LogError($"{nameof(basket)} is empty!");
         }
-        foreach (var basketItem in basket!.Data!.BasketItems!)
+        else
         {
-            if (basketItem.CourseId == context.Message.CourseId)
+            foreach (var basketItem in basket!.Data!.BasketItems!)
             {
-               basketItem.CourseName = context.Message.CourseName;
+                if (basketItem.CourseId == context.Message.CourseId)
+                {
+                    basketItem.CourseName = context.Message.CourseName;
+                }
             }
+            await _basketService.SaveOrUpdate(basket.Data);
         }
-        await _basketService.SaveOrUpdate(basket.Data);
     }
 }
