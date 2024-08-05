@@ -2,11 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <LangVersion>9</LangVersion>
+    <LangVersion>8</LangVersion>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>f2a8b371-ce89-454a-8d90-c8b4ec37935e</UserSecretsId>
-    <DockerfileContext>..\..</DockerfileContext>
-	  <DockerfileRunArguments>-p "5002:5002" -p "5003:5003"</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>

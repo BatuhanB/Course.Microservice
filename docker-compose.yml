@@ -1,58 +1,54 @@
-version: '3.4'
-
+version: '3.8'
 services:
   catalog.api:
-    image: ${DOCKER_REGISTRY-}catalogapi
-    container_name: catalog.api
-    build:
+    image: catalog_api_image
+    build: 
       context: .
       dockerfile: Services/Catalog/Course.Catalog.Service.Api/Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=5000
-      - ASPNETCORE_HTTPS_PORTS=5001
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  catalog.database:
-    container_name: catalog.database
-    image: mongo:latest
-    ports:
-      - 27017:27017
-    volumes:
-      - db-data:/data/db
-      - db-data:/data/configdb
-    command: mongod
-  # identity.server:
-  #   image: ${DOCKER_REGISTRY-}identityserver
-  #   container_name: identity.server
-  #   build:
-  #     context: .
-  #     dockerfile: IdentityServer/Course.IdentityServer/Dockerfile
-  #   environment:
-  #     - ASPNETCORE_URLS="https://+:5003;http://+:5002"
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_HTTP_PORT=5002
-  #     - ASPNETCORE_HTTPS_PORT=5003
-  #   ports:
-  #     - "5002:5002"
-  #     - "5003:5003"
-  #   volumes:
-  #     - ${APPDATA}\Microsoft\UserSecrets\:/root/.microsoft/usersecrets
-  #     - ${APPDATA}\.aspnet\https:/root/.aspnet/https/
-  # identity.server.database:
-  #   container_name: identity.server.database
-  #   image: mcr.microsoft.com/mssql/server:2019-latest
-  #   restart: always
-  #   environment:
-  #     ACCEPT_EULA: "Y"
-  #     SA_PASSWORD: "Password12*"
-  #   ports:
-  #     - "1435:1433"
-  #   volumes:
-  #     - ${APPDATA}/identity-server/:/var/opt/mssql/data
+  basket.api:
+    image: basket_api_image
+    build: 
+      context: .
+      dockerfile: Services/Basket/Course.Basket.Service.Api/Dockerfile
+  discount.api:
+    image: discount_api_image
+    build: 
+      context: .
+      dockerfile: Services/Discount/Course.Discount.Service.Api/Dockerfile
+  identity.api:
+    image: identity_api_image
+    build: 
+      context: .
+      dockerfile: IdentityServer/Course.IdentityServer/Dockerfile
+  order.api:
+    image: order_api_image
+    build: 
+      context: .
+      dockerfile: Services/Order/Course.Order.API/Dockerfile
+  payment.api:
+    image: payment_api_image
+    build: 
+      context: .
+      dockerfile: Services/FakePayment/Course.FakePayment.Service.Api/Dockerfile
+  photostock.api:
+    image: photostock_api_image
+    build: 
+      context: .
+      dockerfile: Services/PhotoStock/Course.PhotoStock.Service.Api/Dockerfile
+  catalogdb:
+    image: mongo
+  basketdb:
+    image: redis:latest
+  discountdb:
+    image: postgres
+  identitydb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+  orderdb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+  rabbitmq:
+    image: rabbitmq:management
 volumes:
-  db-data:
+  catalogdb_volume:
+  discountdb_volume:
+  identitydb_volume:
+  orderdb_volume:
