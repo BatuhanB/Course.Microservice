@@ -23,7 +23,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.Authority = builder.Configuration["Token:Issuer"];
         options.Audience = builder.Configuration["Token:Audience"];
-        options.MapInboundClaims = false;
+        options.RequireHttpsMetadata = false;
     });
 
 builder.Services.AddControllers(opt =>

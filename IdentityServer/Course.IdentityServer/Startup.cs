@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Course.IdentityServer.Services;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Course.IdentityServer
 {
@@ -69,9 +70,16 @@ namespace Course.IdentityServer
             builder.AddResourceOwnerValidator<IdentityResourceOwnerPasswordValidator>();
             builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
 
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
-
+            if (Environment.IsDevelopment())
+            {
+                // For development only: Not recommended for production
+                builder.AddDeveloperSigningCredential();
+            }
+            else
+            {
+                // Add production signing credential
+                builder.AddSigningCredential(new X509Certificate2("path-to-production-certificate.pfx", "your-certificate-password"));
+            }
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {

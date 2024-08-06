@@ -16,7 +16,7 @@ services:
     container_name: discountdb
     restart: always
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - discountdb_volume:/var/lib/postgresql/data
     environment:
@@ -56,25 +56,27 @@ services:
       - RABBITMQ_DEFAULT_PASS=Password12*
   catalog.api:
     container_name: catalog.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DatabaseSettings__ConnectionString=mongodb://catalogdb:27017
-      - RabbitMQ__URL=rabbitmq
-      - Token__Issuer=http://identity.api:5004
+      - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
+      - RabbitMQ:URL=rabbitmq
+      - Token:Issuer=http://identity.api
     ports:
-      - "5019:80"
+      - "5019:8080"
     depends_on:
       - catalogdb
       - rabbitmq
   basket.api:
     container_name: basket.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - RedisSettings__Host=basketdb
-      - RabbitMQ__URL=rabbitmq
-      - Token__Issuer=http://identity.api:5004
+      - RedisSettings:Host=basketdb
+      - RabbitMQ:URL=rabbitmq
+      - Token:Issuer=http://identity.api
     ports:
-      - "5021:80"
+      - "5021:8080"
     depends_on:
       - basketdb
       - rabbitmq
@@ -82,50 +84,53 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=discountdb;Port=5433;Database=discountdb;User ID=postgres;Password=postgres;
-      - Token__Issuer=http://identity.api:5004
+      - ConnectionStrings:DefaultConnection=Host=discountdb;Port=5434;Database=discountdb;User ID=postgres;Password=postgres;
+      - Token:Issuer=http://identity.api
     ports:
-      - "5022:80"
+      - "5022:8080"
     depends_on:
       - discountdb
   identity.api:
     container_name: identity.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=identitydb;Database=IdentityDb;User=sa;Password=Password12*;Encrypt=false;
+      - ConnectionStrings:DefaultConnection=Server=identitydb;Database=IdentityDb;User=sa;Password=Password12*;Encrypt=false;
     ports:
       - "5004:80"
     depends_on:
       - identitydb
   order.api:
     container_name: order.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=orderdb;Database=Orderdb;User=sa;Password=Password12*;Encrypt=false;
-      - Token__Issuer=http://identity.api:5004
-      - RabbitMQ__URL=rabbitmq
+      - ConnectionStrings:DefaultConnection=Server=orderdb;Database=Orderdb;User=sa;Password=Password12*;Encrypt=false;
+      - Token:Issuer=http://identity.api
+      - RabbitMQ:URL=rabbitmq
     ports:
-      - "5023:80"
+      - "5023:8080"
     depends_on:
       - orderdb
       - rabbitmq
   payment.api:
     container_name: payment.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - Token__Issuer=http://identity.api:5004
-      - RabbitMQ__URL=rabbitmq
+      - Token:Issuer=http://identity.api
+      - RabbitMQ:URL=rabbitmq
     ports:
-      - "5024:80"
+      - "5024:8080"
     depends_on:
       - rabbitmq
   photostock.api:
     container_name: photostock.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - Token__Issuer=http://identity.api:5004
+      - Token:Issuer=http://identity.api
     ports:
-      - "5020:80"
+      - "5020:8080"
     volumes:
       - type: bind
         source: C:\Users\balib\photos
