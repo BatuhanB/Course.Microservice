@@ -20,9 +20,14 @@ namespace Course.Order.Service.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string userId)
         {
-            return CreateActionResultInstance(await _basketService.Get(_identityService.GetUserId));
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID cannot be null or empty.");
+            }
+
+            return CreateActionResultInstance(await _basketService.Get(userId));
         }
 
         [HttpPost]

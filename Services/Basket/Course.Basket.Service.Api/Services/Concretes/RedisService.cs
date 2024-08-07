@@ -9,7 +9,17 @@ namespace Course.Order.Service.Api.Services.Concretes
 
         private ConnectionMultiplexer _ConnectionMultiplexer;
 
-        public void Connect() => _ConnectionMultiplexer = ConnectionMultiplexer.Connect($"{_host}:{_port}");
+        public void Connect()
+        {
+            var options = new ConfigurationOptions
+            {
+                AbortOnConnectFail = false,
+                // Activate this part in development not in production
+                //EndPoints = { $"{_host}:{_port}" }
+                EndPoints = { $"{_host}" }
+            };
+            _ConnectionMultiplexer = ConnectionMultiplexer.Connect(options);
+        }
 
         public IDatabase GetDb(int db = 1) => _ConnectionMultiplexer.GetDatabase(db);
     }

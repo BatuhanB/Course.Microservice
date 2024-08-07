@@ -151,6 +151,15 @@ services:
       - type: bind
         source: C:\Users\balib\photos
         target: /app/wwwroot/photos
+  gateway.api:
+    container_name: gateway.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Token:Issuer=http://identity.api
+      - TZ=Etc/GMT-3
+    ports:
+      - "5000:8080"
 volumes:
   catalogdb_volume:
   discountdb_volume:

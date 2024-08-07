@@ -9,7 +9,6 @@
           "Port": 5019
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/catalog/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
@@ -27,7 +26,6 @@
           "Port": 5020
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/photostock/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
@@ -45,7 +43,6 @@
           "Port": 5021
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/basket/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
@@ -63,7 +60,6 @@
           "Port": 5022
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
@@ -81,7 +77,6 @@
           "Port": 5023
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/order/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
@@ -99,7 +94,6 @@
           "Port": 5024
         }
       ],
-      //Client Request URL
       "UpstreamPathTemplate": "/services/fakepayment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",

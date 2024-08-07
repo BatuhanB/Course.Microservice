@@ -1,4 +1,5 @@
 using Course.Gateway.DelegateHandlers;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -10,7 +11,16 @@ builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme",
 {
     options.Authority = builder.Configuration["Token:Issuer"];
     options.Audience = builder.Configuration["Token:Audience"];
-    options.MapInboundClaims = false;
+    options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero, // Remove clock skew
+            ValidIssuer = builder.Configuration["Token:Issuer"],
+            ValidAudience = builder.Configuration["Token:Audience"],
+        };
 });
 
 builder.Services.AddCors(options =>
