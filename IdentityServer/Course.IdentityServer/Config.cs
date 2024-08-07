@@ -62,7 +62,8 @@ namespace Course.IdentityServer
                     AllowedScopes={ "catalog_fullpermission",
                                     "photostock_fullpermission",
                                     "gateway_fullpermission",
-                                    IdentityServerConstants.LocalApi.ScopeName}
+                                    IdentityServerConstants.LocalApi.ScopeName},
+                    // AllowedCorsOrigins = { "http://localhost:5004", "http://identity.api" }
                 },
                 new Client()
                 {

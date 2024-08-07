@@ -7,11 +7,15 @@ services:
       - "27017:27017"
     volumes:
       - catalogdb_volume:/data/db
+    environment:
+      - TZ=Etc/GMT-3
   basketdb:
     container_name: basketdb
     restart: always
     ports:
       - "1200:6379"
+    environment:
+      - TZ=Etc/GMT-3
   discountdb:
     container_name: discountdb
     restart: always
@@ -23,6 +27,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=discountdb
+      - TZ=Etc/GMT-3
   identitydb:
     container_name: identitydb
     user: root
@@ -34,6 +39,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password12*
+      - TZ=Etc/GMT-3
   orderdb:
     container_name: orderdb
     user: root
@@ -45,6 +51,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password12*
+      - TZ=Etc/GMT-3
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -54,6 +61,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=rabbitmquser
       - RABBITMQ_DEFAULT_PASS=Password12*
+      - TZ=Etc/GMT-3
   catalog.api:
     container_name: catalog.api
     restart: on-failure
@@ -62,6 +70,7 @@ services:
       - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
       - RabbitMQ:URL=rabbitmq
       - Token:Issuer=http://identity.api
+      - TZ=Etc/GMT-3
     ports:
       - "5019:8080"
     depends_on:
@@ -75,6 +84,7 @@ services:
       - RedisSettings:Host=basketdb
       - RabbitMQ:URL=rabbitmq
       - Token:Issuer=http://identity.api
+      - TZ=Etc/GMT-3
     ports:
       - "5021:8080"
     depends_on:
@@ -86,6 +96,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:DefaultConnection=Host=discountdb;Port=5434;Database=discountdb;User ID=postgres;Password=postgres;
       - Token:Issuer=http://identity.api
+      - TZ=Etc/GMT-3
     ports:
       - "5022:8080"
     depends_on:
@@ -96,6 +107,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:DefaultConnection=Server=identitydb;Database=IdentityDb;User=sa;Password=Password12*;Encrypt=false;
+      - TZ=Etc/GMT-3
+      - IssueUrl=http://identity.api
     ports:
       - "5004:80"
     depends_on:
@@ -108,6 +121,7 @@ services:
       - ConnectionStrings:DefaultConnection=Server=orderdb;Database=Orderdb;User=sa;Password=Password12*;Encrypt=false;
       - Token:Issuer=http://identity.api
       - RabbitMQ:URL=rabbitmq
+      - TZ=Etc/GMT-3
     ports:
       - "5023:8080"
     depends_on:
@@ -120,6 +134,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Token:Issuer=http://identity.api
       - RabbitMQ:URL=rabbitmq
+      - TZ=Etc/GMT-3
     ports:
       - "5024:8080"
     depends_on:
@@ -129,6 +144,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - Token:Issuer=http://identity.api
+      - TZ=Etc/GMT-3
     ports:
       - "5020:8080"
     volumes:
