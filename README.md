@@ -54,6 +54,16 @@ Course.Microservice/
   - **Course.Web/**: Frontend web application.
 - **docker-compose.yml**: Docker Compose file for container orchestration.
 
+## Technologies Used
+
+- **Backend**: .NET Core
+- **Frontend**: HTML, CSS, JavaScript
+- **Authentication**: IdentityServer
+- **API Gateway**: Ocelot
+- **Communication**: RabbitMQ
+- **Database**: PostgreSQL
+- **Containerization**: Docker
+
 ## Getting Started
 
 These instructions will help you set up and run the project on your local machine for development and testing purposes.
@@ -73,9 +83,11 @@ These instructions will help you set up and run the project on your local machin
    git clone https://github.com/BatuhanB/Course.Microservice.git
    cd Course.Microservice
    ```
-2. Restore dependencies:
+2. Set up environment variables:
+   Create a .env file in the root directory and add the necessary environment variables.
+3. Build and run Docker containers:
    ```bash
-   dotnet restore
+   docker-compose up --build
    ```
 ### Running the Application
 
