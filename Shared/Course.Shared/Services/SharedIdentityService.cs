@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Course.Shared.Services;
 
@@ -24,10 +25,10 @@ public class SharedIdentityService(IHttpContextAccessor contextAccessor) : IShar
                 throw new NullReferenceException("User is null.");
             }
 
-            var userId = user.FindFirst("sub")?.Value;
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
-                Console.WriteLine("User ID is null or empty.");
+                Console.WriteLine("User ID is null.");
                 throw new NullReferenceException("User ID cannot be null or empty.");
             }
 

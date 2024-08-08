@@ -94,7 +94,7 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Host=discountdb;Port=5434;Database=discountdb;User ID=postgres;Password=postgres;
+      - ConnectionStrings:DefaultConnection=Host=discountdb;Database=discountdb;User ID=postgres;Password=postgres;
       - Token:Issuer=http://identity.api
       - TZ=Etc/GMT-3
     ports:

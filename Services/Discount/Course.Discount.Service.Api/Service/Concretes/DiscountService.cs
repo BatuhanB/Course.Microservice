@@ -2,6 +2,7 @@
 using Course.Discount.Service.Api.Service.Contracts;
 using Course.Shared.Dtos;
 using Dapper;
+using Discount.Course.Discount.Service.Api;
 using Npgsql;
 using System.Data;
 
@@ -76,5 +77,9 @@ public class DiscountService : IDiscountService
         });
 
         return status > 0 ? Response<NoContent>.Success(204) : Response<NoContent>.Fail("Discount could not updated.", 500);
+    }
+
+    public async Task CreateDbIfNotExists(){
+        await _connection.ExecuteAsync(CreateDbScript.CreateDbScriptSql);
     }
 }

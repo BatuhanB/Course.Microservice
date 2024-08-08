@@ -43,11 +43,29 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+await MigrateDatabaseIfNotExists(app);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+static async Task<IServiceScope> MigrateDatabaseIfNotExists(WebApplication app){
+    var scope = app.Services.CreateScope();
+    var discountService = scope.ServiceProvider.GetRequiredService<IDiscountService>();
+
+    await discountService.CreateDbIfNotExists();
+    var discounts = await discountService.GetAllAsync();
+    if(!discounts.Data.Any()){
+        await discountService.CreateAsync(new Course.Discount.Service.Api.Models.Discount(){
+            Code = "Aa78hdJsul34kLM",
+            Rate = 10,
+            UserId = "b27560fb-8385-4524-b052-faddced6a12d"
+        });
+    }
+
+    return scope;
 }
 
 app.UseAuthentication();
