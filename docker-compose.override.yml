@@ -160,6 +160,18 @@ services:
       - TZ=Etc/GMT-3
     ports:
       - "5000:8080"
+  notification.api:
+    container_name: notification.api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Token:Issuer=http://identity.api
+      - RabbitMQ:URL=rabbitmq
+      - TZ=Etc/GMT-3
+    ports:
+      - "5025:8080"
+    depends_on:
+      - rabbitmq
 volumes:
   catalogdb_volume:
   discountdb_volume:

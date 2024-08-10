@@ -4,6 +4,7 @@ namespace Course.Order.Domain.OrderAggregate;
 public class OrderItem : Entity
 {
     public string ProductId { get; private set; }
+    public string ProductOwnerId { get; private set; }
     public string ProductName { get; private set; }
     public string ImageUrl { get; private set; }
     public Decimal Price { get; private set; }
@@ -12,8 +13,9 @@ public class OrderItem : Entity
     {
     }
 
-    public OrderItem(string productId, string productName, string imageUrl, decimal price)
+    public OrderItem(string productId, string productName, string imageUrl, decimal price,string productOwnerId)
     {
+        ProductOwnerId = productOwnerId;
         ProductId = productId;
         ProductName = productName;
         ImageUrl = imageUrl;

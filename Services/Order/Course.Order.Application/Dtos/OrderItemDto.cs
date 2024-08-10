@@ -1,2 +1,2 @@
 ﻿namespace Course.Order.Application.Dtos;
-public sealed record OrderItemDto(string ProductId, string ProductName, string ImageUrl, decimal Price);
+public sealed record OrderItemDto(string ProductId, string ProductName, string ImageUrl, decimal Price,string ProductOwnerId);

@@ -102,8 +102,8 @@ static IServiceScope MigrateDataIfNotExists(WebApplication app)
     {
         var order1 = new Order("b27560fb-8385-4524-b052-faddced6a12d", new Address("Test Province", "Test Disctrict", "Test Street", "00000", "Test Line 1"));
         var order2 = new Order("b27560fb-8385-4524-b052-faddced6a12d", new Address("Test Province", "Test Disctrict", "Test Street", "11111", "Test Line 2"));
-        order1.AddOrderItem(Guid.NewGuid().ToString(), "Test Product", 123, "");
-        order2.AddOrderItem(Guid.NewGuid().ToString(), "Test Product 2", 223, "");
+        order1.AddOrderItem(Guid.NewGuid().ToString(), "Test Product", 123, "", "b27560fb-8385-4524-b052-faddced6a12d");
+        order2.AddOrderItem(Guid.NewGuid().ToString(), "Test Product 2", 223, "", "b27560fb-8385-4524-b052-faddced6a12d");
         dbContext.Orders.Add(order1);
         dbContext.Orders.Add(order2);
     }

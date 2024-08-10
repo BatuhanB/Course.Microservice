@@ -69,6 +69,23 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notification.api",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/services/notification/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowScopes": [ "notification_fullpermission" ]
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/{everything}/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

@@ -12,6 +12,7 @@ public class MappingProfile : Profile
         CreateMap<Domain.OrderAggregate.Order, Dtos.OrderDto>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Order, CreateOrderCommand>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Order, Dtos.CreatedOrderDto>().ReverseMap();
+        CreateMap<Course.Shared.Messages.OrderItem, Dtos.OrderItemDto>().ReverseMap();
         CreateMap<Domain.OrderAggregate.Address, Dtos.AddressDto>().ReverseMap();
         CreateMap<Domain.OrderAggregate.OrderItem, Dtos.OrderItemDto>().ReverseMap();
         CreateMap<IPaginate<Domain.OrderAggregate.Order>, OrderListDto>().ReverseMap();

@@ -101,6 +101,23 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5025
+        }
+      ],
+      "UpstreamPathTemplate": "/services/notification/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowScopes": [ "notification_fullpermission" ]
+      }
     }
   ],
   "GlobalConfiguration": {

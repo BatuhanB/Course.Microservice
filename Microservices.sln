@@ -60,6 +60,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{101A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Course.Web", "clients\Course.Web\Course.Web.csproj", "{0E5A4C9A-FC24-42B0-88B4-4C9CFD0BB35A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{D01118BD-17A6-4098-920B-D6FCADB26FA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Course.Notification.Service.Api", "Services\Notification\Course.Notification.Service.Api\Course.Notification.Service.Api.csproj", "{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +130,10 @@ Global
 		{0E5A4C9A-FC24-42B0-88B4-4C9CFD0BB35A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E5A4C9A-FC24-42B0-88B4-4C9CFD0BB35A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E5A4C9A-FC24-42B0-88B4-4C9CFD0BB35A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +159,8 @@ Global
 		{439DB10B-F0C1-438A-863D-581E6863813B} = {215800B9-853B-488F-8133-21A002AA1292}
 		{761C46A4-8F6F-49AA-99AD-26224805C829} = {2A2A6D1D-D2B1-4023-A46F-53420FB96E55}
 		{0E5A4C9A-FC24-42B0-88B4-4C9CFD0BB35A} = {101A270E-CADF-452C-9792-9FEE7ABF20BD}
+		{D01118BD-17A6-4098-920B-D6FCADB26FA2} = {EA5D60CF-6D39-45CE-AFE3-6F0E5607BB7A}
+		{B32B1654-D1C2-44A1-B1CC-AF545D9A8A3C} = {D01118BD-17A6-4098-920B-D6FCADB26FA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7020AC2F-C4F0-42DC-B4F1-042D09B010F6}

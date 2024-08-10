@@ -40,6 +40,11 @@ services:
     build: 
       context: .
       dockerfile: Services/PhotoStock/Course.PhotoStock.Service.Api/Dockerfile
+  notification.api:
+    image: notification_api_image
+    build: 
+      context: .
+      dockerfile: Services/Notification/Course.Notification.Service.Api/Dockerfile
   catalogdb:
     image: mongo
   basketdb:

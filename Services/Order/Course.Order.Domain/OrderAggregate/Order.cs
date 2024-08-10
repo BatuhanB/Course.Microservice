@@ -25,13 +25,13 @@ public class Order : Entity, IAggregateRoot
         Address = address;
     }
 
-    public void AddOrderItem(string productId, string productName, decimal price, string imageUrl)
+    public void AddOrderItem(string productId, string productName, decimal price, string imageUrl,string productOwnerId)
     {
         var existProduct = _orderItems.Any(x => x.ProductId == productId);
 
         if (!existProduct)
         {
-            var newOrderItem = new OrderItem(productId, productName, imageUrl, price);
+            var newOrderItem = new OrderItem(productId, productName, imageUrl, price,productOwnerId);
 
             _orderItems.Add(newOrderItem);
         }

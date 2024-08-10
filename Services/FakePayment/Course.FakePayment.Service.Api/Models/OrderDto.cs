@@ -19,6 +19,7 @@ public class Address
 public class OrderItem
 {
     public string ProductId { get; set; }
+    public string ProductOwnerId { get; set; }
     public string ProductName { get; set; }
     public string ImageUrl { get; set; }
     public decimal Price { get; set; }

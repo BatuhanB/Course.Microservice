@@ -20,6 +20,7 @@ namespace Course.IdentityServer
             new ApiResource("resource_order"){Scopes={ "order_fullpermission" } },
             new ApiResource("resource_fake_payment"){Scopes={ "fake_payment_fullpermission" } },
             new ApiResource("resource_gateway"){Scopes={ "gateway_fullpermission" } },
+            new ApiResource("resource_notification"){Scopes={ "notification_fullpermission" } },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -47,6 +48,7 @@ namespace Course.IdentityServer
                 new ApiScope("order_fullpermission","Full Permission For Order API"),
                 new ApiScope("fake_payment_fullpermission","Full Permission For Fake Payment API"),
                 new ApiScope("gateway_fullpermission","Full Permission For API Gateway"),
+                new ApiScope("notification_fullpermission","Full Permission For Notification API"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -62,8 +64,7 @@ namespace Course.IdentityServer
                     AllowedScopes={ "catalog_fullpermission",
                                     "photostock_fullpermission",
                                     "gateway_fullpermission",
-                                    IdentityServerConstants.LocalApi.ScopeName},
-                    // AllowedCorsOrigins = { "http://localhost:5004", "http://identity.api" }
+                                    IdentityServerConstants.LocalApi.ScopeName}
                 },
                 new Client()
                 {
@@ -75,6 +76,7 @@ namespace Course.IdentityServer
                     AllowedScopes={ "basket_fullpermission",
                                     "order_fullpermission",
                                     "gateway_fullpermission",
+                                    "notification_fullpermission",
                                     IdentityServerConstants.LocalApi.ScopeName,
                                     IdentityServerConstants.StandardScopes.Email,
                                     IdentityServerConstants.StandardScopes.OpenId,
