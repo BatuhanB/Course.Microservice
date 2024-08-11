@@ -62,116 +62,116 @@ services:
       - RABBITMQ_DEFAULT_USER=rabbitmquser
       - RABBITMQ_DEFAULT_PASS=Password12*
       - TZ=Etc/GMT-3
-  catalog.api:
-    container_name: catalog.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
-      - RabbitMQ:URL=rabbitmq
-      - Token:Issuer=http://identity.api
-      - TZ=Etc/GMT-3
-    ports:
-      - "5019:8080"
-    depends_on:
-      - catalogdb
-      - rabbitmq
-  basket.api:
-    container_name: basket.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - RedisSettings:Host=basketdb
-      - RabbitMQ:URL=rabbitmq
-      - Token:Issuer=http://identity.api
-      - TZ=Etc/GMT-3
-    ports:
-      - "5021:8080"
-    depends_on:
-      - basketdb
-      - rabbitmq
-  discount.api:
-    container_name: discount.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Host=discountdb;Database=discountdb;User ID=postgres;Password=postgres;
-      - Token:Issuer=http://identity.api
-      - TZ=Etc/GMT-3
-    ports:
-      - "5022:8080"
-    depends_on:
-      - discountdb
-  identity.api:
-    container_name: identity.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Server=identitydb;Database=IdentityDb;User=sa;Password=Password12*;Encrypt=false;
-      - TZ=Etc/GMT-3
-      - IssueUrl=http://identity.api
-    ports:
-      - "5004:80"
-    depends_on:
-      - identitydb
-  order.api:
-    container_name: order.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings:DefaultConnection=Server=orderdb;Database=Orderdb;User=sa;Password=Password12*;Encrypt=false;
-      - Token:Issuer=http://identity.api
-      - RabbitMQ:URL=rabbitmq
-      - TZ=Etc/GMT-3
-    ports:
-      - "5023:8080"
-    depends_on:
-      - orderdb
-      - rabbitmq
-  payment.api:
-    container_name: payment.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Token:Issuer=http://identity.api
-      - RabbitMQ:URL=rabbitmq
-      - TZ=Etc/GMT-3
-    ports:
-      - "5024:8080"
-    depends_on:
-      - rabbitmq
-  photostock.api:
-    container_name: photostock.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Token:Issuer=http://identity.api
-      - TZ=Etc/GMT-3
-    ports:
-      - "5020:8080"
-    volumes:
-      - type: bind
-        source: C:\Users\balib\photos
-        target: /app/wwwroot/photos
-  gateway.api:
-    container_name: gateway.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - Token:Issuer=http://identity.api
-      - TZ=Etc/GMT-3
-    ports:
-      - "5000:8080"
-  notification.api:
-    container_name: notification.api
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - Token:Issuer=http://identity.api
-      - RabbitMQ:URL=rabbitmq
-      - TZ=Etc/GMT-3
-    ports:
-      - "5025:8080"
-    depends_on:
-      - rabbitmq
+  # catalog.api:
+  #   container_name: catalog.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
+  #     - RabbitMQ:URL=rabbitmq
+  #     - Token:Issuer=http://identity.api
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5019:8080"
+  #   depends_on:
+  #     - catalogdb
+  #     - rabbitmq
+  # basket.api:
+  #   container_name: basket.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - RedisSettings:Host=basketdb
+  #     - RabbitMQ:URL=rabbitmq
+  #     - Token:Issuer=http://identity.api
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5021:8080"
+  #   depends_on:
+  #     - basketdb
+  #     - rabbitmq
+  # discount.api:
+  #   container_name: discount.api
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings:DefaultConnection=Host=discountdb;Database=discountdb;User ID=postgres;Password=postgres;
+  #     - Token:Issuer=http://identity.api
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5022:8080"
+  #   depends_on:
+  #     - discountdb
+  # identity.api:
+  #   container_name: identity.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings:DefaultConnection=Server=identitydb;Database=IdentityDb;User=sa;Password=Password12*;Encrypt=false;
+  #     - TZ=Etc/GMT-3
+  #     - IssueUrl=http://identity.api
+  #   ports:
+  #     - "5004:80"
+  #   depends_on:
+  #     - identitydb
+  # order.api:
+  #   container_name: order.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ConnectionStrings:DefaultConnection=Server=orderdb;Database=Orderdb;User=sa;Password=Password12*;Encrypt=false;
+  #     - Token:Issuer=http://identity.api
+  #     - RabbitMQ:URL=rabbitmq
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5023:8080"
+  #   depends_on:
+  #     - orderdb
+  #     - rabbitmq
+  # payment.api:
+  #   container_name: payment.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - Token:Issuer=http://identity.api
+  #     - RabbitMQ:URL=rabbitmq
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5024:8080"
+  #   depends_on:
+  #     - rabbitmq
+  # photostock.api:
+  #   container_name: photostock.api
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - Token:Issuer=http://identity.api
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5020:8080"
+  #   volumes:
+  #     - type: bind
+  #       source: C:\Users\balib\photos
+  #       target: /app/wwwroot/photos
+  # gateway.api:
+  #   container_name: gateway.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Production
+  #     - Token:Issuer=http://identity.api
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5000:8080"
+  # notification.api:
+  #   container_name: notification.api
+  #   restart: on-failure
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - Token:Issuer=http://identity.api
+  #     - RabbitMQ:URL=rabbitmq
+  #     - TZ=Etc/GMT-3
+  #   ports:
+  #     - "5025:8080"
+  #   depends_on:
+  #     - rabbitmq
 volumes:
   catalogdb_volume:
   discountdb_volume:

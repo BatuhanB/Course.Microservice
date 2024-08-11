@@ -111,7 +111,7 @@
           "Port": 5025
         }
       ],
-      "UpstreamPathTemplate": "/services/notification/{everything}",
+      "UpstreamPathTemplate": "/services/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamSchema": "http",
       "AuthenticationOptions": {

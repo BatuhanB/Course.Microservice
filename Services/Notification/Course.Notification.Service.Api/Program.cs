@@ -1,12 +1,27 @@
+using Model = Course.Notification.Service.Api.Models;
 using Course.Notification.Service.Api.Consumers;
 using Course.Notification.Service.Api.Hubs;
+using Course.Notification.Service.Api.Services.Abstracts;
+using Course.Notification.Service.Api.Services.Concretes;
+using Course.Notification.Service.Api.Settings;
+using Course.Shared.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSignalR();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
+
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddCors(options =>
 {
@@ -18,7 +33,6 @@ builder.Services.AddCors(options =>
                .AllowCredentials();
     });
 });
-
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -54,6 +68,14 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+builder.Services.AddSingleton(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+    var redisService = new RedisService(settings.Host, settings.Port);
+    redisService.Connect();
+    return redisService;
+});
+
 var app = builder.Build();
 
 app.UseCors("CorsPolicy");
@@ -61,18 +83,54 @@ app.UseCors("CorsPolicy");
 app.UseRouting();
 
 app.UseAuthentication();
-app.UseAuthorization();
 
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapHub<NotificationHub>("/notificationHub");
+    _ = endpoints.MapHub<NotificationHub>("/notificationHub");
 });
 
-
-app.MapGet("/", () =>
+// Delete all notifications for a user
+app.MapDelete("/notification/d/{userId}", async (string userId, INotificationService notificationService) =>
 {
-    return string.Empty;
+    var response = await notificationService.Delete(userId);
+    return response.Data ? Results.Ok(response) : Results.BadRequest(response);
+});
+
+// Get a specific notification by its ID for a user
+app.MapGet("/notification/g/{userId}/{notificationId}", async (string userId, string notificationId, INotificationService notificationService) =>
+{
+    var response = await notificationService.Get(userId, notificationId);
+    return response.Data != null ? Results.Ok(response) : Results.NotFound(response);
+});
+
+// Get all notifications for a user
+app.MapGet("/notifications/g/{userId}", async (string userId, INotificationService notificationService) =>
+{
+    var response = await notificationService.GetAll(userId);
+    return response.Data != null ? Results.Ok(response) : Results.NotFound(response);
+});
+
+// Set mark all as read notifications for a user
+app.MapGet("/notifications/m/{userId}", async (string userId, INotificationService notificationService) =>
+{
+    var response = await notificationService.MarkAllAsRead(userId);
+    return response.Data ? Results.Ok(response) : Results.NotFound(response);
+});
+
+// Add or update a single notification
+app.MapPost("/notification/u", async ([FromBody] Model.NotificationDto notification, INotificationService notificationService) =>
+{
+
+    var notificationModel = new Model.Notification(
+        notification.Title,
+        notification.Description,
+        notification.Status,
+        notification.UserId
+    );
+    var response = await notificationService.SaveOrUpdate(notificationModel);
+    return response.Data ? Results.Ok(response) : Results.BadRequest(response);
 });
 
 app.Run();

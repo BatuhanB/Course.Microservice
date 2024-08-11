@@ -58,6 +58,13 @@ namespace Course.IdentityServer
                             Email = "admin@mail.com",
                             City = "Istanbul",
                         },"Password12*").Wait();
+
+                        userManager.CreateAsync(new ApplicationUser()
+                        {
+                            UserName = "guest",
+                            Email = "guest@mail.com",
+                            City = "Istanbul",
+                        }, "Password12*").Wait();
                     }
                 }
                 

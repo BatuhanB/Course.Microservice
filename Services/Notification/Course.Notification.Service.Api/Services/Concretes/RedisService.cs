@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Course.Order.Service.Api.Services.Concretes
+namespace Course.Notification.Service.Api.Services.Concretes
 {
     public class RedisService(string host, int port)
     {
@@ -21,6 +21,6 @@ namespace Course.Order.Service.Api.Services.Concretes
             _ConnectionMultiplexer = ConnectionMultiplexer.Connect(options);
         }
 
-        public IDatabase GetDb(int db = 1) => _ConnectionMultiplexer.GetDatabase(db);
+        public IDatabase GetDb(int db = 2) => _ConnectionMultiplexer.GetDatabase(db);
     }
 }

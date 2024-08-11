@@ -1,50 +1,50 @@
 version: '3.8'
 services:
-  gateway.api:
-    image: gateway_api_image
-    build: 
-      context: .
-      dockerfile: Gateways/Course.Gateway/Dockerfile
-  catalog.api:
-    image: catalog_api_image
-    build: 
-      context: .
-      dockerfile: Services/Catalog/Course.Catalog.Service.Api/Dockerfile
-  basket.api:
-    image: basket_api_image
-    build: 
-      context: .
-      dockerfile: Services/Basket/Course.Basket.Service.Api/Dockerfile
-  discount.api:
-    image: discount_api_image
-    build: 
-      context: .
-      dockerfile: Services/Discount/Course.Discount.Service.Api/Dockerfile
-  identity.api:
-    image: identity_api_image
-    build: 
-      context: .
-      dockerfile: IdentityServer/Course.IdentityServer/Dockerfile
-  order.api:
-    image: order_api_image
-    build: 
-      context: .
-      dockerfile: Services/Order/Course.Order.API/Dockerfile
-  payment.api:
-    image: payment_api_image
-    build: 
-      context: .
-      dockerfile: Services/FakePayment/Course.FakePayment.Service.Api/Dockerfile
-  photostock.api:
-    image: photostock_api_image
-    build: 
-      context: .
-      dockerfile: Services/PhotoStock/Course.PhotoStock.Service.Api/Dockerfile
-  notification.api:
-    image: notification_api_image
-    build: 
-      context: .
-      dockerfile: Services/Notification/Course.Notification.Service.Api/Dockerfile
+  # gateway.api:
+  #   image: gateway_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Gateways/Course.Gateway/Dockerfile
+  # catalog.api:
+  #   image: catalog_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Catalog/Course.Catalog.Service.Api/Dockerfile
+  # basket.api:
+  #   image: basket_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Basket/Course.Basket.Service.Api/Dockerfile
+  # discount.api:
+  #   image: discount_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Discount/Course.Discount.Service.Api/Dockerfile
+  # identity.api:
+  #   image: identity_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: IdentityServer/Course.IdentityServer/Dockerfile
+  # order.api:
+  #   image: order_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Order/Course.Order.API/Dockerfile
+  # payment.api:
+  #   image: payment_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/FakePayment/Course.FakePayment.Service.Api/Dockerfile
+  # notification.api:
+  #   image: notification_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/Notification/Course.Notification.Service.Api/Dockerfile
+  # photostock.api:
+  #   image: photostock_api_image
+  #   build: 
+  #     context: .
+  #     dockerfile: Services/PhotoStock/Course.PhotoStock.Service.Api/Dockerfile
   catalogdb:
     image: mongo
   basketdb:

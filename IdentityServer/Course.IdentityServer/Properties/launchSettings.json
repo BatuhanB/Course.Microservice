@@ -5,7 +5,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://identity.api"
+      "applicationUrl": "http://localhost:5004"
     }
   }
 }
