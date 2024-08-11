@@ -26,7 +26,7 @@ public class OrderCreatedNotificationEventConsumer(
         {
             var notifications = await _notificationService.GetAll(context.Message.CourseOwnerId);
             await _hubContext.Clients.User(context.Message.CourseOwnerId)
-                .SendAsync("ReceiveNotification", notifications);
+                .SendAsync("ReceiveMessage", notifications);
 
             _logger.LogInformation($"{context.Message.CourseName} - {context.Message.CourseOwnerId} - {context.Message.CourseBuyDate}");
         }
