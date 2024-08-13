@@ -14,6 +14,17 @@ services:
     restart: always
     ports:
       - "1200:6379"
+    volumes:
+        - basketdb_volume:/data
+    environment:
+      - TZ=Etc/GMT-3
+  notificationdb:
+    container_name: notificationdb
+    restart: always
+    ports:
+      - "1201:6379"
+    volumes:
+        - notificationdb_volume:/data
     environment:
       - TZ=Etc/GMT-3
   discountdb:
@@ -174,6 +185,8 @@ services:
   #     - rabbitmq
 volumes:
   catalogdb_volume:
+  basketdb_volume:
+  notificationdb_volume:
   discountdb_volume:
   identitydb_volume:
   orderdb_volume:

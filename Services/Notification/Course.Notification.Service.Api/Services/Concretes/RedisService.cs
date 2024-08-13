@@ -21,6 +21,6 @@ namespace Course.Notification.Service.Api.Services.Concretes
             _ConnectionMultiplexer = ConnectionMultiplexer.Connect(options);
         }
 
-        public IDatabase GetDb(int db = 2) => _ConnectionMultiplexer.GetDatabase(db);
+        public IDatabase GetDb(int db = 0) => _ConnectionMultiplexer.GetDatabase(db);
     }
 }

@@ -49,6 +49,8 @@ services:
     image: mongo
   basketdb:
     image: redis:latest
+  notificationdb:
+    image: redis:latest
   discountdb:
     image: postgres
   identitydb:
@@ -59,6 +61,8 @@ services:
     image: rabbitmq:management
 volumes:
   catalogdb_volume:
+  basketdb_volume:
+  notificationdb_volume:
   discountdb_volume:
   identitydb_volume:
   orderdb_volume:
