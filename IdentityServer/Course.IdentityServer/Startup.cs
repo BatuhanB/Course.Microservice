@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Course.IdentityServer.Services;
 using System.Security.Cryptography.X509Certificates;
+using Course.IdentityServer.Services.Abstracts;
+using Course.IdentityServer.Services.Concretes;
 
 namespace Course.IdentityServer
 {
@@ -48,6 +50,10 @@ namespace Course.IdentityServer
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ICardInformationService, CardInformationService>();
+            services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

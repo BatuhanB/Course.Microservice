@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Course.IdentityServer.Models
 {
@@ -6,5 +7,7 @@ namespace Course.IdentityServer.Models
     public class ApplicationUser : IdentityUser
     {
         public string City { get; set; }
+        public List<Address> Addresses { get; set; }
+        public List<CardInformation> CardInformations { get; set; }
     }
 }

@@ -11,8 +11,23 @@ namespace Course.IdentityServer.Data
         {
         }
 
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<CardInformation> CardInformations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.Addresses)
+                .WithOne(y => y.User)
+                .HasForeignKey(f => f.UserId)
+                .HasPrincipalKey(a => a.Id);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(x => x.CardInformations)
+                .WithOne(y => y.User)
+                .HasForeignKey(c => c.UserId)
+                .HasPrincipalKey(a => a.Id);
+
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
