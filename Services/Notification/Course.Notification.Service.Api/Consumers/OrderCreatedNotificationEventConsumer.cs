@@ -36,7 +36,7 @@ public class OrderCreatedNotificationEventConsumer(
     {
         var newNotification = await _notificationService.Get(notification.UserId, notification.Id);
         await _hubContext.Clients.User(notification.UserId)
-            .SendAsync("ReceiveMessage", newNotification);
+            .SendAsync("ReceiveMessage", newNotification.Data);
 
         _logger.LogInformation($"{notification.Title} - {notification.UserId} - {notification.CreatedDate}");
     }
