@@ -1,5 +1,6 @@
 ﻿using Course.Notification.Service.Api.Services.Abstracts;
 using Newtonsoft.Json;
+using StackExchange.Redis;
 using Sha = Course.Shared.Dtos;
 
 namespace Course.Notification.Service.Api.Services.Concretes
@@ -11,7 +12,7 @@ namespace Course.Notification.Service.Api.Services.Concretes
         public async Task<Sha.Response<bool>> Delete(string userId)
         {
             var db = _redisService.GetDb();
-            var result = await db.KeyDeleteAsync(userId);
+            var result = await db.KeyDeleteAsync($"notifications:{userId}");
             return result
                 ? Sha.Response<bool>.Success(true, 200)
                 : Sha.Response<bool>.Fail("Notifications not found", 404);
@@ -20,7 +21,7 @@ namespace Course.Notification.Service.Api.Services.Concretes
         public async Task<Sha.Response<Models.NotificationDto>> Get(string userId, string notificationId)
         {
             var db = _redisService.GetDb();
-            var notifications = await db.ListRangeAsync(userId);
+            var notifications = await db.SortedSetRangeByScoreAsync($"notifications:{userId}");
 
             var notification = notifications
                 .Select(n => JsonConvert.DeserializeObject<Models.NotificationDto>(n))
@@ -31,10 +32,13 @@ namespace Course.Notification.Service.Api.Services.Concretes
                 : Sha.Response<Models.NotificationDto>.Fail("Notification not found", 404);
         }
 
-        public async Task<Sha.Response<List<Models.NotificationDto>>> GetAll(string userId)
+        public async Task<Sha.Response<List<Models.NotificationDto>>> GetAll(string userId,int count = 20)
         {
             var db = _redisService.GetDb();
-            var notifications = await db.ListRangeAsync(userId);
+            userId = $"notifications:{userId}";
+            var notifications = await db.SortedSetRangeByScoreAsync(userId,
+                order:Order.Descending,
+                take:count);
 
             var notificationList = notifications
                 .Select(n => JsonConvert.DeserializeObject<Models.NotificationDto>(n))
@@ -45,7 +49,7 @@ namespace Course.Notification.Service.Api.Services.Concretes
                 : Sha.Response<List<Models.NotificationDto>>.Fail("No notifications found", 404);
         }
 
-        public async Task<Sha.Response<bool>> SaveOrUpdate(Models.Notification notification)
+        public async Task<Sha.Response<bool>> Save(Models.Notification notification)
         {
             if (notification == null)
             {
@@ -55,8 +59,9 @@ namespace Course.Notification.Service.Api.Services.Concretes
             var db = _redisService.GetDb();
             var serializedNotification = JsonConvert.SerializeObject(notification);
 
-            // Add or update the notification in the list
-            await db.ListRightPushAsync(notification.UserId, serializedNotification);
+            // Use the notification timestamp as the score for the sorted set
+            var score = new DateTimeOffset(notification.CreatedDate).ToUnixTimeSeconds();
+            await db.SortedSetAddAsync($"notifications:{notification.UserId}", serializedNotification, score);
 
             return Sha.Response<bool>.Success(true, 200);
         }
@@ -64,32 +69,38 @@ namespace Course.Notification.Service.Api.Services.Concretes
         public async Task<Sha.Response<bool>> MarkAllAsRead(string userId)
         {
             var db = _redisService.GetDb();
-            var notifications = await db.ListRangeAsync(userId);
+            var notifications = await db.SortedSetRangeByScoreAsync($"notifications:{userId}");
 
             if (!notifications.Any())
             {
                 return Sha.Response<bool>.Fail("No notifications found", 404);
             }
 
-            var notificationList = notifications
-                .Select(n => JsonConvert.DeserializeObject<Models.NotificationDto>(n))
-                .ToList();
+            var updatedCount = 0;
 
-            var updatedNotifications = notificationList.Select(notification =>
+            foreach (var serializedNotification in notifications)
             {
-                var updatedNotification = new Models.Notification(notification!.Id, notification.Title, notification.Description, true, notification.UserId, notification.CreatedDate);
+                var notification = JsonConvert.DeserializeObject<Models.NotificationDto>(serializedNotification);
+                if (notification != null && !notification.Status)
+                {
+                    // Mark as read
+                    notification.Status = true;
 
-                return JsonConvert.SerializeObject(updatedNotification);
-            });
+                    // Remove the old notification entry
+                    await db.SortedSetRemoveAsync($"notifications:{userId}", serializedNotification);
 
-            // Clear existing notifications and push updated ones
-            await db.KeyDeleteAsync(userId);
-            foreach (var updatedNotification in updatedNotifications)
-            {
-                await db.ListRightPushAsync(userId, updatedNotification);
+                    // Add the updated notification with the same score
+                    var updatedSerializedNotification = JsonConvert.SerializeObject(notification);
+                    var score = new DateTimeOffset(notification.CreatedDate).ToUnixTimeSeconds();
+                    await db.SortedSetAddAsync($"notifications:{userId}", updatedSerializedNotification, score);
+
+                    updatedCount++;
+                }
             }
 
-            return Sha.Response<bool>.Success(true, 200);
+            return updatedCount > 0
+                ? Sha.Response<bool>.Success(true, 200)
+                : Sha.Response<bool>.Fail("All notifications are already marked as read", 204);
         }
     }
 }

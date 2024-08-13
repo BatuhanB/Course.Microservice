@@ -19,20 +19,25 @@ public class OrderCreatedNotificationEventConsumer(
     public async Task Consume(ConsumeContext<OrderCreatedNotificationEvent> context)
     {
         var notificationBody = $"Your course {context.Message.CourseName} was purchased on {context.Message.CourseBuyDate}";
-        var notification = new Models.Notification(context.Message.CourseName, notificationBody, false, context.Message.CourseOwnerId);
-        var res = await _notificationService.SaveOrUpdate(notification);
+        var notification = new Models.Notification(context.Message.CourseName, notificationBody, context.Message.CourseOwnerId);
+        var res = await _notificationService.Save(notification);
 
         if (res.IsSuccessful)
         {
-            var notifications = await _notificationService.GetAll(context.Message.CourseOwnerId);
-            await _hubContext.Clients.User(context.Message.CourseOwnerId)
-                .SendAsync("ReceiveMessage", notifications);
-
-            _logger.LogInformation($"{context.Message.CourseName} - {context.Message.CourseOwnerId} - {context.Message.CourseBuyDate}");
+            await SendNotificationsToClient(notification);
         }
         else
         {
             _logger.LogError($"Error occured while saving notification!");
         }
+    }
+
+    private async Task SendNotificationsToClient(Models.Notification notification)
+    {
+        var newNotification = await _notificationService.Get(notification.UserId, notification.Id);
+        await _hubContext.Clients.User(notification.UserId)
+            .SendAsync("ReceiveMessage", newNotification);
+
+        _logger.LogInformation($"{notification.Title} - {notification.UserId} - {notification.CreatedDate}");
     }
 }

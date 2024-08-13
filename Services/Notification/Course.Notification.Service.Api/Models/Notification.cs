@@ -9,18 +9,13 @@ public class Notification
     public bool Status { get; private set; }
     public string UserId { get; private set; }
 
-    public void SetStatus(bool status)
-    {
-        Status = status;
-    }
-
-    public Notification(string title,string description,bool status,string userId)
+    public Notification(string title,string description,string userId)
     {
         Id = Guid.NewGuid().ToString();
         Title = title;
         Description = description;
         CreatedDate = DateTime.Now;
-        Status = status;
+        Status = false;
         UserId = userId;
     }
 

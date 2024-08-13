@@ -122,14 +122,12 @@ app.MapGet("/notifications/m/{userId}", async (string userId, INotificationServi
 // Add or update a single notification
 app.MapPost("/notification/u", async ([FromBody] Model.NotificationDto notification, INotificationService notificationService) =>
 {
-
     var notificationModel = new Model.Notification(
         notification.Title,
         notification.Description,
-        notification.Status,
         notification.UserId
     );
-    var response = await notificationService.SaveOrUpdate(notificationModel);
+    var response = await notificationService.Save(notificationModel);
     return response.Data ? Results.Ok(response) : Results.BadRequest(response);
 });
 

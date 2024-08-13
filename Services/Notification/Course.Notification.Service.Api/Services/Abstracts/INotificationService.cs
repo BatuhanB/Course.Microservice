@@ -7,7 +7,7 @@ public interface INotificationService
 {
     Task<Response<bool>> Delete(string id);
     Task<Response<Models.NotificationDto>> Get(string userId, string notificationId);
-    Task<Response<List<Models.NotificationDto>>> GetAll(string userId);
-    Task<Response<bool>> SaveOrUpdate(Models.Notification notification);
+    Task<Response<List<Models.NotificationDto>>> GetAll(string userId,int count = 20);
+    Task<Response<bool>> Save(Models.Notification notification);
     Task<Response<bool>> MarkAllAsRead(string userId);
 }
