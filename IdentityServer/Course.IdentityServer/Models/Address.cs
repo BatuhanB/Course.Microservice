@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Course.IdentityServer.Models
 {
@@ -9,6 +10,7 @@ namespace Course.IdentityServer.Models
         public string Street { get; set; }
         public string ZipCode { get; set; }
         public string Line { get; set; }
+        [JsonIgnore]
         public ApplicationUser User { get; set; }
     }
 }

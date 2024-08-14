@@ -1,4 +1,5 @@
 ﻿using Course.IdentityServer.Dtos;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Course.IdentityServer.Services.Abstracts
@@ -7,7 +8,7 @@ namespace Course.IdentityServer.Services.Abstracts
     {
         Task<Response<bool>> CreateAsync(T entity);
         Task<Response<bool>> UpdateAsync(T entity);
-        Task<Response<T>> GetByUserIdAsync(string userId);
+        Task<Response<List<T>>> GetByUserIdAsync(string userId);
         Task<Response<T>> GetByIdAsync(string id);
     }
 }

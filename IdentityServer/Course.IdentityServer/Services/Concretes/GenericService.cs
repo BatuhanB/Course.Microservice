@@ -4,6 +4,8 @@ using Course.IdentityServer.Dtos;
 using Course.IdentityServer.Models;
 using Course.IdentityServer.Services.Abstracts;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Course.IdentityServer.Services.Concretes
@@ -31,18 +33,18 @@ namespace Course.IdentityServer.Services.Concretes
 
         public async Task<Response<T>> GetByIdAsync(string id)
         {
-            var entity = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _dbSet.FirstOrDefaultAsync(x=>x.Id == id);
             return entity != null
                 ? Response<T>.Success(entity, 200)
                 : Response<T>.Fail($"{typeof(T)} Could not found.", 404);
         }
 
-        public async Task<Response<T>> GetByUserIdAsync(string userId)
+        public async Task<Response<List<T>>> GetByUserIdAsync(string userId)
         {
-            var entity = await _dbSet.FirstOrDefaultAsync(x => x.UserId == userId);
+            var entity = await _dbSet.Where(x => x.UserId == userId).ToListAsync();
             return entity != null
-                ? Response<T>.Success(entity, 200)
-                : Response<T>.Fail($"{typeof(T)} Could not found.", 404);
+                ? Response<List<T>>.Success(entity, 200)
+                : Response<List<T>>.Fail($"{typeof(T)} Could not found.", 404);
         }
 
         public async Task<Response<bool>> UpdateAsync(T entity)

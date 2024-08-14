@@ -2,10 +2,10 @@
 {
     public class CardInformationDto
     {
+        public string Id { get; set; }
         public string CardName { get; set; }
         public string CardNumber { get; set; }
         public string Expiration { get; set; }
-        public decimal TotalPrice { get; set; }
         public string UserId { get; set; }
     }
 }
