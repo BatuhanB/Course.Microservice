@@ -50,6 +50,8 @@ var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");
 
+app.UseWebSockets();
+
 await app.UseOcelot();
 
 app.Run();

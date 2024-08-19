@@ -118,6 +118,23 @@
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowScopes": [ "notification_fullpermission" ]
       }
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5025
+        }
+      ],
+      "UpstreamPathTemplate": "/hub/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowScopes": [ "notification_fullpermission" ]
+      }
     }
   ],
   "GlobalConfiguration": {
