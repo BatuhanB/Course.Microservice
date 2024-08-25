@@ -1,18 +1,21 @@
 using Course.Invoice.Api.Middlewares;
 using Course.Invoice.Application;
+using Course.Invoice.Infrastructure.Data;
 using Course.Invoice.Presentation;
 using Course.Shared.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+var presentationAssembly = typeof(AssemblyReference).Assembly;
 
 builder.Services.AddApplicationDependencies(builder.Configuration);
 builder.Services.AddPresentationDependencies(builder.Configuration);
-
+   
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
@@ -38,7 +41,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
-});
+}).AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMassTransit(x =>
 {
@@ -60,6 +63,11 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    await ApplyMigrations(app.Services);
+}
+
 app.UseExceptionHandler(_ => { });
 
 app.UseAuthentication();
@@ -69,3 +77,12 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static async Task ApplyMigrations(IServiceProvider serviceProvider)
+{
+    using var scope = serviceProvider.CreateScope();
+
+    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    await dbContext.Database.MigrateAsync();
+}

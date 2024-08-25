@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Course.Invoice.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240825123224_initial")]
+    [Migration("20240825130535_initial")]
     partial class initial
     {
         /// <inheritdoc />

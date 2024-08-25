@@ -1,7 +1,7 @@
 ﻿using Course.Shared.Dtos;
 using MediatR;
 
-namespace Application.Abstractions.Messaging;
+namespace Course.Invoice.Application.Abstractions.Messaging;
 
 public interface ICommandHandler<in TCommand>
     : IRequestHandler<TCommand, Response<object>>

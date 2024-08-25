@@ -1,4 +1,5 @@
-﻿using Course.Invoice.Infrastructure.Data;
+﻿using Course.Invoice.Application.Abstractions.Data;
+using Course.Invoice.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ public static class ServiceRegistration
         {
             conf.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
+
+        services.AddSingleton<IApplicationDbContext,ApplicationDbContext>();
         return services;
     }
 }

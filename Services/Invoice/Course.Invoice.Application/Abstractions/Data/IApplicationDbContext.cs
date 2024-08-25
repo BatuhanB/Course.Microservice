@@ -1,11 +1,12 @@
-﻿
+﻿using Course.Invoice.Domain.Invoice;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Abstractions.Data;
+namespace Course.Invoice.Application.Abstractions.Data;
 
 public interface IApplicationDbContext
 {
-    //DbSet<Invoice> Users { get; }
+    DbSet<Domain.Invoice.Invoice> Invoices { get; }
+    DbSet<Customer> Customers { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

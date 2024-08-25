@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using System.Windows.Input;
 
 namespace Course.Invoice.Application.Abstractions.Behaviors;
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) :
     IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest
+    where TRequest : class, Messaging.ICommand<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators = validators;
 

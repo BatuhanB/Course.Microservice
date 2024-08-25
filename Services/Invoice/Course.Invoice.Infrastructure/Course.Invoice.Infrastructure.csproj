@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Course.Invoice.Application\Course.Invoice.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

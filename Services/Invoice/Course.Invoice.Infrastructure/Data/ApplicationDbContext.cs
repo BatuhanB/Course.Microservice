@@ -1,8 +1,9 @@
-﻿using Course.Invoice.Domain.Invoice;
+﻿using Course.Invoice.Application.Abstractions.Data;
+using Course.Invoice.Domain.Invoice;
 using Microsoft.EntityFrameworkCore;
 
 namespace Course.Invoice.Infrastructure.Data;
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private const string DEFAULT_SCHEME = "invoices";
     public DbSet<Domain.Invoice.Invoice> Invoices { get; set; }
