@@ -39,6 +39,18 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=discountdb
       - TZ=Etc/GMT-3
+  invoicedb:
+    container_name: invoicedb
+    restart: always
+    ports:
+      - "5438:5432"
+    volumes:
+      - invoicedb_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=invoicedb
+      - TZ=Etc/GMT-3
   identitydb:
     container_name: identitydb
     user: root
@@ -190,3 +202,4 @@ volumes:
   discountdb_volume:
   identitydb_volume:
   orderdb_volume:
+  invoicedb_volume:

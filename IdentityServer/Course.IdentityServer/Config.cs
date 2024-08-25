@@ -21,6 +21,7 @@ namespace Course.IdentityServer
             new ApiResource("resource_fake_payment"){Scopes={ "fake_payment_fullpermission" } },
             new ApiResource("resource_gateway"){Scopes={ "gateway_fullpermission" } },
             new ApiResource("resource_notification"){Scopes={ "notification_fullpermission" } },
+            new ApiResource("resource_invoice"){Scopes={ "invoice_fullpermission" } },
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         public static IEnumerable<IdentityResource> IdentityResources =>
@@ -49,6 +50,7 @@ namespace Course.IdentityServer
                 new ApiScope("fake_payment_fullpermission","Full Permission For Fake Payment API"),
                 new ApiScope("gateway_fullpermission","Full Permission For API Gateway"),
                 new ApiScope("notification_fullpermission","Full Permission For Notification API"),
+                new ApiScope("invoice_fullpermission","Full Permission For Invoice API"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -96,6 +98,7 @@ namespace Course.IdentityServer
                     AllowedScopes={
                         "discount_fullpermission",
                         "fake_payment_fullpermission",
+                        "invoice_fullpermission",
                         IdentityServerConstants.StandardScopes.OpenId }
                 },
 

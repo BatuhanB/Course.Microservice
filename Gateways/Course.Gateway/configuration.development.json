@@ -135,6 +135,23 @@
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowScopes": [ "notification_fullpermission" ]
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5025
+        }
+      ],
+      "UpstreamPathTemplate": "/invoice/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamScheme": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowScopes": [ "invoice_fullpermission" ]
+      }
     }
   ],
   "GlobalConfiguration": {

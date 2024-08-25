@@ -9,13 +9,13 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
 
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        var result = new Invoice.Api.Models.ProblemDetails();
+        var result = new Models.ProblemDetails();
 
         if (exception.GetType() == typeof(FluentValidation.ValidationException))
         {
             var errors = ((FluentValidation.ValidationException)exception).Errors.Select(x => x.PropertyName).ToList();
 
-            result = new Invoice.Api.Models.ProblemDetails
+            result = new Models.ProblemDetails
             {
                 StatusCode = (int)HttpStatusCode.BadRequest,
                 Type = exception.GetType().Name,
@@ -27,7 +27,7 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
         }
         else if (exception.GetType() == typeof(ArgumentNullException))
         {
-            result = new Invoice.Api.Models.ProblemDetails
+            result = new Models.ProblemDetails
             {
                 StatusCode = (int)HttpStatusCode.NotFound,
                 Type = exception.GetType().Name,
@@ -39,7 +39,7 @@ public sealed class ExceptionHandler(ILogger<ExceptionHandler> logger) : IExcept
         }
         else
         {
-            result = new Invoice.Api.Models.ProblemDetails
+            result = new Models.ProblemDetails
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError,
                 Type = exception.GetType().Name,

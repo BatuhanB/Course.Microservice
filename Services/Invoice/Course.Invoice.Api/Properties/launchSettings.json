@@ -9,15 +9,15 @@
     }
   },
   "profiles": {
-    "http": {
+    "Course.Invoice.Service.Api": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "weatherforecast",
-      "applicationUrl": "http://localhost:5179",
+      "launchBrowser": false,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5026"
     },
     "IIS Express": {
       "commandName": "IISExpress",

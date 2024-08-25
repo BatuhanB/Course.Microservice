@@ -5,6 +5,7 @@ Discount.Service.API = http://localhost:5022;
 Order.Service.API = http://localhost:5023;
 FakePayment.Service.API = http://localhost:5024;
 Notification.Service.API = http://localhost:5025;
+Invoice.Service.API = http://localhost:5026;
 Gateway.API = http://localhost:5000;
 IdentityServer = https://localhost:5004;
 Client = http://localhost:5010;
