@@ -46,11 +46,26 @@ namespace Course.IdentityServer.Controllers
         public async Task<IActionResult> Get()
         {
             var userIdClaim = User.Claims.FirstOrDefault(x=>x.Type == JwtRegisteredClaimNames.Sub);
-
             
             if (userIdClaim == null) return BadRequest();
 
             var user = await _userManager.FindByIdAsync(userIdClaim.Value);
+
+            if (user == null) return BadRequest();
+
+            return Ok(new
+            {
+                Id= user.Id,
+                UserName= user.UserName,
+                City= user.City,
+                Email = user.Email
+            });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null) return BadRequest();
 

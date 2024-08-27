@@ -3,24 +3,21 @@
 namespace Course.Invoice.Domain.Invoice;
 public class Customer : ValueObject
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
+    public string UserName { get; private set; }
     public Address Address { get; private set; }
     public Customer()
     {
         
     }
-    public Customer(string firstName, string lastName, Address address)
+    public Customer(string userName, Address address)
     {
-        FirstName = firstName;
-        LastName = lastName;
+        UserName = userName;
         Address = address;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return FirstName;
-        yield return LastName;
+        yield return UserName;
         yield return Address;
     }
 }

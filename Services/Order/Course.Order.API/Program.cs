@@ -1,6 +1,7 @@
 using Course.Order.API.Middlewares;
 using Course.Order.Application;
 using Course.Order.Application.Consumers;
+using Course.Order.Application.Features.Orders.Commands.CreateOrder;
 using Course.Order.Domain.OrderAggregate;
 using Course.Order.Infrastructure;
 using Course.Order.Infrastructure.Persistence.DbContexts;
@@ -14,8 +15,14 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpClient<CreateOrderCommandHandler>(conf =>
+{
+    conf.BaseAddress = new Uri(builder.Configuration["Token:Issuer"]!);
+})
+.AddHttpMessageHandler<AuthorizationHandler>();
+
 builder.Services.AddExceptionHandler<ExceptionHandler>();
-builder.Services.AddApplicationDependency();
+builder.Services.AddApplicationDependency(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
