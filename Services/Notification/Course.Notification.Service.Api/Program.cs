@@ -128,6 +128,13 @@ app.MapGet("/notifications/g/{userId}", async (string userId, INotificationServi
     return response.Data != null ? Results.Ok(response) : Results.NotFound(response);
 });
 
+// Get all notifications for a user
+app.MapGet("/notifications/go/{userId}/{latestId}", async (string userId, string latestId, INotificationService notificationService) =>
+{
+    var response = await notificationService.GetAllCursorPagination(userId, latestId);
+    return response.Data != null ? Results.Ok(response) : Results.NotFound(response);
+});
+
 // Set mark all as read notifications for a user
 app.MapGet("/notifications/m/{userId}", async (string userId, INotificationService notificationService) =>
 {

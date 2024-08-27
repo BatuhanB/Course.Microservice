@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient("CreateOrderCommand",conf =>
 {
-    conf.BaseAddress = new Uri($"{builder.Configuration["IdentityUrl"]}/");
+    conf.BaseAddress = new Uri($"{builder.Configuration["Token:Issuer"]}/");
 })
 .AddHttpMessageHandler<AuthorizationHandler>();
 

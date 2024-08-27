@@ -102,5 +102,42 @@ namespace Course.Notification.Service.Api.Services.Concretes
                 ? Sha.Response<bool>.Success(true, 200)
                 : Sha.Response<bool>.Fail("All notifications are already marked as read", 204);
         }
+
+        public async Task<Sha.Response<List<Models.NotificationDto>>> GetAllCursorPagination(string userId, string latestId, int count = 20)
+        {
+            var db = _redisService.GetDb();
+            userId = $"notifications:{userId}";
+
+            // Define the min and max score depending on the latestId
+            double minScore = double.NegativeInfinity;
+            double maxScore = double.PositiveInfinity;
+
+            if (!string.IsNullOrEmpty(latestId))
+            {
+                var latestNotification = await db.SortedSetScoreAsync(userId, latestId);
+                if (latestNotification.HasValue)
+                {
+                    maxScore = latestNotification.Value;
+                }
+            }
+
+            // Fetch the notifications with a cursor
+            var notifications = await db.SortedSetRangeByScoreAsync(
+                userId,
+                start: minScore,
+                stop: maxScore,
+                exclude: Exclude.Stop,  // Exclude the max score (i.e., latestId)
+                order: Order.Descending,
+                take: count
+            );
+
+            var notificationList = notifications
+                .Select(n => JsonConvert.DeserializeObject<Models.NotificationDto>(n))
+                .ToList();
+
+            return notificationList.Any()
+                ? Sha.Response<List<Models.NotificationDto>>.Success(notificationList, 200)
+                : Sha.Response<List<Models.NotificationDto>>.Fail("No notifications found", 404);
+        }
     }
 }
