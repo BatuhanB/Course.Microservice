@@ -16,8 +16,8 @@ public class CreateInvoiceCommandHandler(IApplicationDbContext dbContext) : ICom
                 new Customer().Map(request.Customer),
                 new OrderInformation().Map(request.OrderInformation));
 
-        await dbContext.Invoices.AddAsync(invoice);
-        await dbContext.SaveChangesAsync();
+        await dbContext.Invoices.AddAsync(invoice, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         response.Data = invoice.Id;
         response.IsSuccessful = true;

@@ -14,7 +14,7 @@ public static class ServiceRegistration
             conf.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
 
-        services.AddSingleton<IApplicationDbContext,ApplicationDbContext>();
+        services.AddScoped<IApplicationDbContext>(sp=>sp.GetRequiredService<ApplicationDbContext>());
         return services;
     }
 }

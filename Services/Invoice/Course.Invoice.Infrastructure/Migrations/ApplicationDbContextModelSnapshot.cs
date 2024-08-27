@@ -22,42 +22,18 @@ namespace Course.Invoice.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Course.Invoice.Domain.Invoice.Customer", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customer", "invoices");
-                });
-
             modelBuilder.Entity("Course.Invoice.Domain.Invoice.Invoice", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CustomerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OrderInformationId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("OrderInformationId");
 
@@ -74,7 +50,7 @@ namespace Course.Invoice.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -116,58 +92,71 @@ namespace Course.Invoice.Infrastructure.Migrations
                     b.ToTable("OrderItem", "invoices");
                 });
 
-            modelBuilder.Entity("Course.Invoice.Domain.Invoice.Customer", b =>
-                {
-                    b.OwnsOne("Course.Invoice.Domain.Invoice.Address", "Address", b1 =>
-                        {
-                            b1.Property<string>("CustomerId")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("District")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Line")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Province")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<string>("ZipCode")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("CustomerId");
-
-                            b1.ToTable("Customer", "invoices");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CustomerId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Course.Invoice.Domain.Invoice.Invoice", b =>
                 {
-                    b.HasOne("Course.Invoice.Domain.Invoice.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Course.Invoice.Domain.Invoice.OrderInformation", "OrderInformation")
                         .WithMany()
                         .HasForeignKey("OrderInformationId");
 
-                    b.Navigation("Customer");
+                    b.OwnsOne("Course.Invoice.Domain.Invoice.Customer", "Customer", b1 =>
+                        {
+                            b1.Property<string>("InvoiceId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("InvoiceId");
+
+                            b1.ToTable("Invoice", "invoices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvoiceId");
+
+                            b1.OwnsOne("Course.Invoice.Domain.Invoice.Address", "Address", b2 =>
+                                {
+                                    b2.Property<string>("CustomerInvoiceId")
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("District")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("Line")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("Province")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("Street")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.Property<string>("ZipCode")
+                                        .IsRequired()
+                                        .HasColumnType("text");
+
+                                    b2.HasKey("CustomerInvoiceId");
+
+                                    b2.ToTable("Invoice", "invoices");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("CustomerInvoiceId");
+                                });
+
+                            b1.Navigation("Address")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("Customer")
+                        .IsRequired();
 
                     b.Navigation("OrderInformation");
                 });

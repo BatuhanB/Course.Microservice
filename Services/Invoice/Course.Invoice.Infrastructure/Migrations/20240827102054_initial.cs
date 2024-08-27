@@ -15,32 +15,13 @@ namespace Course.Invoice.Infrastructure.Migrations
                 name: "invoices");
 
             migrationBuilder.CreateTable(
-                name: "Customer",
-                schema: "invoices",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    FirstName = table.Column<string>(type: "text", nullable: false),
-                    LastName = table.Column<string>(type: "text", nullable: false),
-                    Address_Province = table.Column<string>(type: "text", nullable: false),
-                    Address_District = table.Column<string>(type: "text", nullable: false),
-                    Address_Street = table.Column<string>(type: "text", nullable: false),
-                    Address_ZipCode = table.Column<string>(type: "text", nullable: false),
-                    Address_Line = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderInformation",
                 schema: "invoices",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     BuyerId = table.Column<string>(type: "text", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    OrderDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,20 +34,19 @@ namespace Course.Invoice.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CustomerId = table.Column<string>(type: "text", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Customer_FirstName = table.Column<string>(type: "text", nullable: false),
+                    Customer_LastName = table.Column<string>(type: "text", nullable: false),
+                    Customer_Address_Province = table.Column<string>(type: "text", nullable: false),
+                    Customer_Address_District = table.Column<string>(type: "text", nullable: false),
+                    Customer_Address_Street = table.Column<string>(type: "text", nullable: false),
+                    Customer_Address_ZipCode = table.Column<string>(type: "text", nullable: false),
+                    Customer_Address_Line = table.Column<string>(type: "text", nullable: false),
                     OrderInformationId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoice", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoice_Customer_CustomerId",
-                        column: x => x.CustomerId,
-                        principalSchema: "invoices",
-                        principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_OrderInformation_OrderInformationId",
                         column: x => x.OrderInformationId,
@@ -101,12 +81,6 @@ namespace Course.Invoice.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoice_CustomerId",
-                schema: "invoices",
-                table: "Invoice",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Invoice_OrderInformationId",
                 schema: "invoices",
                 table: "Invoice",
@@ -128,10 +102,6 @@ namespace Course.Invoice.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderItem",
-                schema: "invoices");
-
-            migrationBuilder.DropTable(
-                name: "Customer",
                 schema: "invoices");
 
             migrationBuilder.DropTable(

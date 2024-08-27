@@ -7,7 +7,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private const string DEFAULT_SCHEME = "invoices";
     public DbSet<Domain.Invoice.Invoice> Invoices { get; set; }
-    public DbSet<Customer> Customers { get; set; }
     public DbSet<OrderInformation> OrderInformations { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
 
@@ -22,16 +21,10 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             .Entity<Domain.Invoice.Invoice>(invoice =>
             {
                 invoice.HasKey(x => x.Id);
-                invoice.HasOne(x => x.Customer);
                 invoice.HasOne(x => x.OrderInformation);
+                invoice.OwnsOne(x => x.Customer)
+                       .OwnsOne(y=>y.Address);
                 invoice.ToTable("Invoice",DEFAULT_SCHEME);
-            });
-        modelBuilder
-            .Entity<Customer>(customer =>
-            {
-                customer.HasKey(x => x.Id);
-                customer.ToTable("Customer", DEFAULT_SCHEME);
-                customer.OwnsOne(x=>x.Address);
             });
         modelBuilder
             .Entity<OrderInformation>(orderInf =>

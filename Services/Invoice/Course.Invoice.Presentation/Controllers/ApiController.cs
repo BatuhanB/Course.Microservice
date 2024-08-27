@@ -8,7 +8,7 @@ namespace Course.Invoice.Presentation.Controllers;
 /// Represents the base API controller.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 public abstract class ApiController : ControllerBase
 {
     private ISender _sender;

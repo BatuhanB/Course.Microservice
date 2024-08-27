@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 var presentationAssembly = typeof(AssemblyReference).Assembly;
 
 builder.Services.AddApplicationDependencies(builder.Configuration);
@@ -40,7 +41,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddControllers(opt =>
 {
-    opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+    //opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
 }).AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMassTransit(x =>
@@ -60,12 +61,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     await ApplyMigrations(app.Services);
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseExceptionHandler(_ => { });

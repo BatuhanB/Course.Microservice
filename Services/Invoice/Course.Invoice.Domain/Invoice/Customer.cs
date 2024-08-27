@@ -1,7 +1,7 @@
 ﻿using Course.Invoice.Domain.Core;
 
 namespace Course.Invoice.Domain.Invoice;
-public class Customer : Entity
+public class Customer : ValueObject
 {
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -15,5 +15,12 @@ public class Customer : Entity
         FirstName = firstName;
         LastName = lastName;
         Address = address;
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return FirstName;
+        yield return LastName;
+        yield return Address;
     }
 }

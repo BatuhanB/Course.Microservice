@@ -8,8 +8,8 @@ public static class CreateInvoiceCustomerAdapter
     {
         customer = 
             new Customer(
-                customer.FirstName,
-                customer.LastName, 
+                customerDto.FirstName,
+                customerDto.LastName, 
                 new Address()
                 .Map(customerDto.Address));
 
