@@ -5,9 +5,7 @@ using Course.Order.Application.Features.Orders.Commands.Adapters;
 using Course.Order.Application.Features.Orders.Models;
 using Course.Shared.Messages;
 using MassTransit;
-using MassTransit.Transports;
 using MediatR;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -17,14 +15,14 @@ public class CreateOrderCommandHandler(
     IMapper mapper,
     IPublishEndpoint publishEndpoint,
     ISendEndpointProvider sendEndpoint,
-    HttpClient httpClient)
+    IHttpClientFactory clientFactory)
     : IRequestHandler<CreateOrderCommand, Shared.Dtos.Response<CreatedOrderDto>>
 {
     private readonly IWriteRepository<Domain.OrderAggregate.Order> _writeRepository = writeRepository;
     private readonly IMapper _mapper = mapper;
     private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
     private readonly ISendEndpointProvider _sendEndpoint = sendEndpoint;
-    private readonly HttpClient _httpClient = httpClient;
+    private readonly HttpClient _httpClient = clientFactory.CreateClient("CreateOrderCommand");
 
 
     public async Task<Shared.Dtos.Response<CreatedOrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -60,9 +58,20 @@ public class CreateOrderCommandHandler(
 
     private async Task SendCreateInvoiceCommandAsync(Domain.OrderAggregate.Order mappedOrder, CancellationToken cancellationToken)
     {
-        var requestUrl = new Uri($"/api/user/getbyid/{mappedOrder.BuyerId}");
-        var request = await _httpClient.GetAsync(requestUrl, cancellationToken);
-        var response = await request.Content.ReadFromJsonAsync<GetUserByIdResponse>();
+        var requestUrl = $"api/user/getbyid/{mappedOrder.BuyerId}";
+        var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new Exception($"API Error: {response.StatusCode}, Content: {errorContent}");
+        }
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(responseContent);
+
+        var userResponse = JsonSerializer.Deserialize<GetUserByIdResponse>(responseContent);
+
         var sendEndpoint = await _sendEndpoint.GetSendEndpoint(new Uri("queue:create-invoiceq"));
 
         if (response == null)
@@ -80,7 +89,7 @@ public class CreateOrderCommandHandler(
         {
             Customer = new CustomerForInvoice()
             {
-                UserName = response.UserName,
+                UserName = userResponse!.UserName,
                 Address = new AddressForInvoice()
                 {
                     District = mappedOrder.Address.District,
@@ -98,7 +107,7 @@ public class CreateOrderCommandHandler(
             }
         };
 
-        await _sendEndpoint
+        await sendEndpoint
             .Send(
             command
             , cancellationToken);

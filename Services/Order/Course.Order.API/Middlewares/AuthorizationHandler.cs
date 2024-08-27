@@ -1,20 +1,22 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Net.Http.Headers;
 
 namespace Course.Order.API.Middlewares;
 
 public class AuthorizationHandler : DelegatingHandler
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _contextAccessor;
 
     public AuthorizationHandler(IHttpContextAccessor httpContextAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _contextAccessor = httpContextAccessor;
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var accessToken = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
+        var accessToken = await _contextAccessor.HttpContext.
+             GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
         if (!string.IsNullOrEmpty(accessToken))
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

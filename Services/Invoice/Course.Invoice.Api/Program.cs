@@ -1,5 +1,6 @@
 using Course.Invoice.Api.Middlewares;
 using Course.Invoice.Application;
+using Course.Invoice.Application.Invoice.Consumers;
 using Course.Invoice.Infrastructure.Data;
 using Course.Invoice.Presentation;
 using Course.Shared.Services;
@@ -41,17 +42,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddControllers(opt =>
 {
-    //opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
+    opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
 }).AddApplicationPart(presentationAssembly);
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<CreateInvoiceCommandConsumer>();
     x.UsingRabbitMq((context, cfg) =>
     {
+        
         cfg.Host(builder.Configuration["RabbitMQ:URL"], "/", host =>
         {
             host.Username(builder.Configuration["RabbitMQ:UserName"]!);
             host.Password(builder.Configuration["RabbitMQ:Password"]!);
+        });
+        cfg.ReceiveEndpoint("create-invoiceq", e =>
+        {
+            e.ConfigureConsumer<CreateInvoiceCommandConsumer>(context);
         });
     });
 });
