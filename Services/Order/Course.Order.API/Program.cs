@@ -15,16 +15,16 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient("CreateOrderCommand",conf =>
+builder.Services.AddHttpClient("CreateOrderCommand", conf =>
 {
     conf.BaseAddress = new Uri($"{builder.Configuration["Token:Issuer"]}/");
-})
-.AddHttpMessageHandler<AuthorizationHandler>();
+});
+//.AddHttpMessageHandler<AuthorizationHandler>();
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddApplicationDependency(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddScoped<AuthorizationHandler>();
+//builder.Services.AddScoped<AuthorizationHandler>();
 
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 

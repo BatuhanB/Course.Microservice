@@ -6,7 +6,6 @@ using Course.Order.Application.Features.Orders.Models;
 using Course.Shared.Messages;
 using MassTransit;
 using MediatR;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Course.Order.Application.Features.Orders.Commands.CreateOrder;
@@ -58,7 +57,7 @@ public class CreateOrderCommandHandler(
 
     private async Task SendCreateInvoiceCommandAsync(Domain.OrderAggregate.Order mappedOrder, CancellationToken cancellationToken)
     {
-        var requestUrl = $"api/user/getbyid/{mappedOrder.BuyerId}";
+        var requestUrl = $"api/shared/getbyid/{mappedOrder.BuyerId}";
         var response = await _httpClient.GetAsync(requestUrl, cancellationToken);
 
         if (!response.IsSuccessStatusCode)
@@ -68,9 +67,13 @@ public class CreateOrderCommandHandler(
         }
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseContent);
 
-        var userResponse = JsonSerializer.Deserialize<GetUserByIdResponse>(responseContent);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        var userResponse = System.Text.Json.JsonSerializer.Deserialize<GetUserByIdResponse>(responseContent, options);
 
         var sendEndpoint = await _sendEndpoint.GetSendEndpoint(new Uri("queue:create-invoiceq"));
 

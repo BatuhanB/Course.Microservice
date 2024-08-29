@@ -9,11 +9,11 @@ public static class OrderItemAdapter
     {
         return new OrderItemForInvoice
         {
-            ProductId = orderItemForInvoice.ProductId,
-            ProductName = orderItemForInvoice.ProductName,
-            ImageUrl = orderItemForInvoice.ImageUrl,
-            Price = orderItemForInvoice.Price,
-            ProductOwnerId = orderItemForInvoice.ProductOwnerId
+            ProductId = orderItem.ProductId,
+            ProductName = orderItem.ProductName,
+            ImageUrl = orderItem.ImageUrl,
+            Price = orderItem.Price,
+            ProductOwnerId = orderItem.ProductOwnerId,
         };
     }
 }

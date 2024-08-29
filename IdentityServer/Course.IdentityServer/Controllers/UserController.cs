@@ -61,21 +61,5 @@ namespace Course.IdentityServer.Controllers
                 Email = user.Email
             });
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null) return BadRequest();
-
-            return Ok(new
-            {
-                Id= user.Id,
-                UserName= user.UserName,
-                City= user.City,
-                Email = user.Email
-            });
-        }
     }
 }
