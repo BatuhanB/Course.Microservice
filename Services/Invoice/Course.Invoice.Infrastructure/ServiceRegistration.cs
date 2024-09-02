@@ -1,20 +1,33 @@
 ﻿using Course.Invoice.Application.Abstractions.Data;
 using Course.Invoice.Infrastructure.Data;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Course.Invoice.Infrastructure.Services;
+using Course.Invoice.Application.Abstractions.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Course.Invoice.Infrastructure;
 public static class ServiceRegistration
 {
-    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services,IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(conf =>
         {
             conf.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         });
 
-        services.AddScoped<IApplicationDbContext>(sp=>sp.GetRequiredService<ApplicationDbContext>());
+        services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
+        services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IPdfConverterService, PdfConverterService>();
+        services.AddSingleton<IFileService>(provider =>
+        {
+            var env = provider.GetRequiredService<IWebHostEnvironment>();
+            return new FileService(env.WebRootPath);
+        });
         return services;
     }
 }
