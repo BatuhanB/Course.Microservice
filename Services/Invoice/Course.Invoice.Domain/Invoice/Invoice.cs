@@ -11,9 +11,9 @@ public class Invoice : Entity, IAggregateRoot
     {
         
     }
-    public Invoice(DateTime createdDate, Customer customer, OrderInformation orderInformation)
+    public Invoice(Customer customer, OrderInformation orderInformation)
     {
-        CreatedDate = createdDate;
+        CreatedDate = DateTime.UtcNow;
         Customer = customer;
         OrderInformation = orderInformation;
     }
