@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Course.Invoice.Infrastructure.Services;
 using Course.Invoice.Application.Abstractions.Services;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Course.Invoice.Infrastructure;
 public static class ServiceRegistration
@@ -26,7 +27,8 @@ public static class ServiceRegistration
         services.AddSingleton<IFileService>(provider =>
         {
             var env = provider.GetRequiredService<IWebHostEnvironment>();
-            return new FileService(env.WebRootPath);
+            var logger = provider.GetRequiredService<ILogger<FileService>>();
+            return new FileService(env.WebRootPath, configuration, logger);
         });
         return services;
     }
