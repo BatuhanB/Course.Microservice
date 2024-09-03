@@ -28,7 +28,7 @@ public static class ServiceRegistration
         {
             var env = provider.GetRequiredService<IWebHostEnvironment>();
             var logger = provider.GetRequiredService<ILogger<FileService>>();
-            return new FileService(env.WebRootPath, configuration, logger);
+            return new FileService(env, configuration, logger);
         });
         return services;
     }

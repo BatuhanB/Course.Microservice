@@ -1,16 +1,17 @@
 ﻿using Course.Invoice.Application.Abstractions.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Course.Invoice.Infrastructure.Services;
 public class FileService : IFileService
 {
-    private readonly string _env;
+    private readonly IWebHostEnvironment _env;
     private readonly IConfiguration _configuration;
     private readonly ILogger<FileService> _logger;
 
     public FileService(
-        string webHostEnvironment, 
+        IWebHostEnvironment webHostEnvironment, 
         IConfiguration configuration, 
         ILogger<FileService> logger)
     {
@@ -21,11 +22,11 @@ public class FileService : IFileService
 
     public async Task<string> SaveInvoicePdf(Domain.Invoice.Invoice invoice, byte[] pdfBytes)
     {
-        var fileName = $"Invoice_{invoice.Id}_{invoice.CreatedDate:yyyyMMdd_HHmmss}";
+        var fileName = $"Invoice_{invoice.Id}_{invoice.CreatedDate:dd_MM_yyyy_HH_mm_ss}";
 
         var fileExtension = ".pdf";
 
-        var fileDirectory = Path.Combine(_env, "invoices");
+        var fileDirectory = Path.Combine(_env.WebRootPath, "invoices");
 
         if (!Directory.Exists(fileDirectory))
         {
@@ -36,7 +37,7 @@ public class FileService : IFileService
 
         await File.WriteAllBytesAsync(filePath, pdfBytes);
 
-        var fileUrl = $"{_configuration["HostScheme"]}/invoices/{fileName}";
+        var fileUrl = $"{_configuration["HostScheme"]}/invoices/{fileName + fileExtension}";
 
         _logger.LogInformation($"{fileUrl} has been created!");
 

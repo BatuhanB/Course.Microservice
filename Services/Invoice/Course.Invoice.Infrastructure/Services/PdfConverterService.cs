@@ -44,173 +44,142 @@ public class PdfConverterService : IPdfConverterService
         var sb = new StringBuilder();
 
         string head = $@"<html>
-        <head>
-            <style>
-                $primary-color: #1779ba;
-$secondary-color: #0b386f;
-$gray:  #9b9b9b;
-$light-gray: #eeeeee;
-$medium-gray: #c8c3be;
-$dark-gray: #96918c;
-$black: #322d28;
-$white: #f3f3f3;
-$body-background: #ffffff;
-$body-font-color: $black;
-
-$sans: 'Montserrat', sans-serif;
-$serif: 'Lora', Georgia, serif;
-
-
-
-body {{
-  font-family: $sans;
-  font-weight: 400;
-  color: $body-font-color;
-}}
-header.top-bar {{
-  h1 {{
-    font-family: $sans;
-  }}
-}}
-main {{
-  margin-top: 4rem;
-  min-height: calc(100vh - 107px);
-  .inner-container {{
-    max-width: 800px;
-    margin: 0 auto;
-  }}
-}}
-
-table.invoice {{
-  background: #fff;
-  .num {{
-    font-weight: 200;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: .8em;
-  }}
-  tr, td {{
-    background: #fff;
-    text-align: left;
-    font-weight: 400;
-    color: $body-font-color;
-  }}
-  tr {{
-    &.header {{
-      td {{
-        img {{
-          max-width: 300px;
+<head>
+    <style>
+        body {{
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: #322d28; /* Replaced $body-font-color with #322d28 */
         }}
-        h2 {{
-          text-align: right;
-          font-family: $sans;
-          font-weight: 200;
-          font-size: 2rem;
-          color: $primary-color;
+
+        header.top-bar h1 {{
+            font-family: 'Montserrat', sans-serif;
         }}
-      }}
-    }}
-    &.intro {{
-      td {{
-        &:nth-child(2) {{
-          text-align: right;
+
+        main {{
+            margin-top: 4rem;
+            min-height: calc(100vh - 107px);
         }}
-      }}
-    }}
-    &.details {{
-      > td {{ 
-        padding-top: 4rem; 
-        padding-bottom: 0; 
-      }}
-      td, th {{
-        &.id,
-        &.qty {{
-          text-align: center;
+
+        main .inner-container {{
+            max-width: 800px;
+            margin: 0 auto;
         }}
-        &:last-child {{
-          text-align: right;
+
+        table.invoice {{
+            background: #fff;
         }}
-      }}
-      table {{
-        thead, tbody {{
-          position: relative;
-          &:after {{
+
+        table.invoice .num {{
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: .8em;
+        }}
+
+        table.invoice tr, table.invoice td {{
+            background: #fff;
+            text-align: left;
+            font-weight: 400;
+            color: #322d28; /* Replaced $black with #322d28 */
+        }}
+
+        table.invoice tr.header td img {{
+            max-width: 300px;
+        }}
+
+        table.invoice tr.header h2 {{
+            text-align: right;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            font-size: 2rem;
+            color: #1779ba; /* Replaced $primary-color with #1779ba */
+        }}
+
+        table.invoice tr.intro td:nth-child(2) {{
+            text-align: right;
+        }}
+
+        table.invoice tr.details > td {{
+            padding-top: 4rem;
+            padding-bottom: 0;
+        }}
+
+        table.invoice tr.details td, table.invoice tr.details th.id, table.invoice tr.details th.qty {{
+            text-align: center;
+        }}
+
+        table.invoice tr.details td:last-child {{
+            text-align: right;
+        }}
+
+        table.invoice tr.details table thead, table.invoice tr.details table tbody {{
+            position: relative;
+        }}
+
+        table.invoice tr.details table thead:after, table.invoice tr.details table tbody:after {{
             content: '';
             height: 1px;
             position: absolute;
             width: 100%;
             left: 0;
             margin-top: -1px;
-            background: $medium-gray;
-          }}
+            background: #c8c3be; /* Replaced $medium-gray with #c8c3be */
         }}
-      }}
-    }}
-    &.totals {{
-      td {{
-        padding-top: 0;
-      }}
-      table {{
-        tr {{
-          td {{
-            padding-top:0;
-            padding-bottom:0;
-            &:nth-child(1) {{
-              font-weight: 500;
-            }}
-            &:nth-child(2) {{
-              text-align: right;
-              font-weight: 200;
-            }}
-          }}
-          &:nth-last-child(2) {{
-            
-            td {{
-              padding-bottom: .5em;
-              &:last-child {{
-                position: relative;
-                &:after {{
-                  content: '';
-                  height: 4px;
-                  width: 110%;
-                  border-top: 1px solid $primary-color;
-                  border-bottom: 1px solid $primary-color;
-                  position: relative;
-                  right: 0;
-                  bottom: -.575rem;
-                  display: block;
-                }}
-              }}
-            }}
-            
-          }}
-          &.total {{
-            td {{
-              font-size: 1.2em;
-              padding-top: .5em;
-              font-weight: 700;
-              &:last-child {{
-                font-weight: 700;
-              }}
-            }}
-          }}
-        }}
-      }}
-    }}
-  }}
-}}
 
-.additional-info {{
-  h5 {{
-    font-size: .8em;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: $primary-color;
-  }}
-}}
-            </style>
-        </head>";
+        table.invoice tr.totals td {{
+            padding-top: 0;
+        }}
+
+        table.invoice tr.totals table tr td {{
+            padding-top: 0;
+            padding-bottom: 0;
+        }}
+
+        table.invoice tr.totals table tr td:nth-child(1) {{
+            font-weight: 500;
+        }}
+
+        table.invoice tr.totals table tr td:nth-child(2) {{
+            text-align: right;
+            font-weight: 200;
+        }}
+
+        table.invoice tr.totals table tr:nth-last-child(2) td {{
+            padding-bottom: .5em;
+        }}
+
+        table.invoice tr.totals table tr:nth-last-child(2) td:last-child:after {{
+            content: '';
+            height: 4px;
+            width: 110%;
+            border-top: 1px solid #1779ba; /* Replaced $primary-color with #1779ba */
+            border-bottom: 1px solid #1779ba; /* Replaced $primary-color with #1779ba */
+            position: relative;
+            right: 0;
+            bottom: -.575rem;
+            display: block;
+        }}
+
+        table.invoice tr.totals table tr.total td {{
+            font-size: 1.2em;
+            padding-top: .5em;
+            font-weight: 700;
+        }}
+
+        table.invoice tr.totals table tr.total td:last-child {{
+            font-weight: 700;
+        }}
+
+        .additional-info h5 {{
+            font-size: .8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1779ba; /* Replaced $primary-color with #1779ba */
+        }}
+    </style>
+</head>";
 
         sb.Append(head);
 
@@ -236,7 +205,7 @@ table.invoice {{
             </td>
             <td class=""text-right"">
               <span class=""num"">Order #{invoice.Id}</span><br>
-              {invoice.CreatedDate:MM/dd/yy H:mm:ss zzz}
+              {invoice.CreatedDate:MM/dd/yy H:mm:ss}
             </td>
           </tr>
           <tr class=""details"">
@@ -293,11 +262,11 @@ table.invoice {{
         <section class=""additional-info"">
         <div class=""row"">
           <div class=""columns"">
-            <h5>Billing Information</h5>
-            <p>{invoice.Customer.Address.District}<br>
-              {invoice.Customer.Address.Street}<br>
-              {invoice.Customer.Address.Line}<br>
-              {invoice.Customer.Address.Province} {invoice.Customer.Address.ZipCode}<br>
+            <h5>Address Information</h5>
+            <p>District: {invoice.Customer.Address.District}<br>
+              Street: {invoice.Customer.Address.Street}<br>
+              Line: {invoice.Customer.Address.Line}<br>
+              Province: {invoice.Customer.Address.Province} {invoice.Customer.Address.ZipCode}<br>
               </p>
           </div>
         </div>
