@@ -1,6 +1,6 @@
 using Course.Invoice.Api.Middlewares;
 using Course.Invoice.Application;
-using Course.Invoice.Application.Invoice.Consumers;
+using Course.Invoice.Application.Features.Invoice.Consumers;
 using Course.Invoice.Infrastructure.Data;
 using Course.Invoice.Presentation;
 using Course.Shared.Services;

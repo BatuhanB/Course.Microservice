@@ -145,7 +145,7 @@
           "Port": 5025
         }
       ],
-      "UpstreamPathTemplate": "/invoice/{everything}",
+      "UpstreamPathTemplate": "/services/invoice/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {

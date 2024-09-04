@@ -1,5 +1,5 @@
-﻿using Course.Invoice.Application.Invoice.Commands.Create;
-using Course.Invoice.Application.Invoice.Queries.GetInvoiceFileByOrderIdAndBuyerIdQuery;
+﻿using Course.Invoice.Application.Features.Invoice.Commands.Create;
+using Course.Invoice.Application.Features.Invoice.Queries.GetInvoiceFileByOrderIdAndBuyerIdQuery;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Course.Invoice.Presentation.Controllers;
