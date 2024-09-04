@@ -17,7 +17,7 @@ builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme",
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero, // Remove clock skew
+            ClockSkew = TimeSpan.Zero,
             ValidIssuer = builder.Configuration["Token:Issuer"],
             ValidAudience = builder.Configuration["Token:Audience"],
         };
@@ -31,7 +31,7 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("http://localhost:4200")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
-                   .AllowCredentials(); // This is important for allowing cookies to be sent
+                   .AllowCredentials();
         });
 });
 

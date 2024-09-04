@@ -16,7 +16,7 @@ public class GetOrdersByUserIdQueryHandler(IReadRepository<Domain.OrderAggregate
     {
         var orders = await _readRepository.GetListAsync(
             predicate: x => x.BuyerId == request.UserId,
-            orderBy: x => x.OrderBy(y => y.Id),
+            orderBy: x => x.OrderByDescending(y => y.CreatedDate),
             include: x => x.Include(y => y.OrderItems),
             index: request.PageRequest.Page,
             size: request.PageRequest.PageSize,

@@ -79,6 +79,7 @@ namespace Course.IdentityServer
                                     "order_fullpermission",
                                     "gateway_fullpermission",
                                     "notification_fullpermission",
+                                    "invoice_fullpermission",
                                     IdentityServerConstants.LocalApi.ScopeName,
                                     IdentityServerConstants.StandardScopes.Email,
                                     IdentityServerConstants.StandardScopes.OpenId,
@@ -98,7 +99,6 @@ namespace Course.IdentityServer
                     AllowedScopes={
                         "discount_fullpermission",
                         "fake_payment_fullpermission",
-                        "invoice_fullpermission",
                         IdentityServerConstants.StandardScopes.OpenId }
                 },
 

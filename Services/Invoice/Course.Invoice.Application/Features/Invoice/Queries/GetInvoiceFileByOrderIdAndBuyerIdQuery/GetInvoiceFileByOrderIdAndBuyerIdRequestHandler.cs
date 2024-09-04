@@ -32,8 +32,11 @@ public class GetInvoiceFileByOrderIdAndBuyerIdRequestHandler(
             return response;
         }
 
-        response.Data!.FileUrl = invoiceFileUrl.FileUrl;
-        response.Data!.InvoiceCreatedDate = invoiceFileUrl.InvoiceCreatedDate;
+        response.Data = new GetInvoiceFileByOrderIdAndBuyerIdResponse()
+        {
+            FileUrl = invoiceFileUrl.FileUrl,
+            InvoiceCreatedDate = invoiceFileUrl.InvoiceCreatedDate
+        };
 
         return response;
     }

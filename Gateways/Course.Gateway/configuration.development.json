@@ -103,6 +103,23 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/{everything}/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5026
+        }
+      ],
+      "UpstreamPathTemplate": "/services/invoice/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamSchema": "http",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowScopes": [ "invoice_fullpermission" ]
+      }
+    },
+    {
       "DownstreamPathTemplate": "/{everything}/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -134,23 +151,6 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowScopes": [ "notification_fullpermission" ]
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}/",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5025
-        }
-      ],
-      "UpstreamPathTemplate": "/services/invoice/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ],
-      "UpstreamScheme": "http",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowScopes": [ "invoice_fullpermission" ]
       }
     }
   ],

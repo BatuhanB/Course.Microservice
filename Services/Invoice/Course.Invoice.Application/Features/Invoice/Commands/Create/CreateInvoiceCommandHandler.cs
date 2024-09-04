@@ -11,7 +11,7 @@ public class CreateInvoiceCommandHandler(
 {
     public async Task<Response<CreateInvoiceCommandResponse>> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
     {
-        var response = new Response<CreateInvoiceCommandResponse>();
+        
         var invoice =
             new Domain.Invoice.Invoice(
                 new Customer().Map(request.Customer),
@@ -20,8 +20,13 @@ public class CreateInvoiceCommandHandler(
         await dbContext.Invoices.AddAsync(invoice, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        response.Data!.InvoiceId = invoice.Id;
-        response.IsSuccessful = true;
+        var response = new Response<CreateInvoiceCommandResponse>()
+        {
+            Data = new CreateInvoiceCommandResponse() {InvoiceId = invoice.Id},
+            IsSuccessful = true,
+            StatusCode = 200
+        };
+       
         return response;
     }
 }
