@@ -9,6 +9,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Domain.Invoice.Invoice> Invoices { get; set; }
     public DbSet<OrderInformation> OrderInformations { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<InvoiceFileUrl>  InvoiceFileUrls { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -45,6 +46,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                     .HasColumnType("decimal(18,2)");
                 orderItem.ToTable("OrderItem", DEFAULT_SCHEME);
             });
+        modelBuilder.Entity<InvoiceFileUrl>(invoiceFileUrl =>
+        {
+            invoiceFileUrl.HasKey(x => x.Id);
+            invoiceFileUrl.ToTable(name: "InvoiceFileUrl", DEFAULT_SCHEME);
+        });
 
         base.OnModelCreating(modelBuilder);
     }
