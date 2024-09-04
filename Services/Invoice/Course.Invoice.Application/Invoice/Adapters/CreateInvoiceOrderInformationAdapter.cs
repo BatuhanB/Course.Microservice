@@ -8,6 +8,7 @@ public static class CreateInvoiceOrderInformationAdapter
     {
         orderInformation =
             new OrderInformation(
+                orderInformation.OrderId,
                 orderInformationDto.BuyerId,
                 orderInformationDto.OrderDate);
 

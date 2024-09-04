@@ -1,7 +1,7 @@
 ﻿using Course.Invoice.Application.Invoice.Constants;
 using FluentValidation;
 
-namespace Course.Invoice.Application.Invoice.Commands;
+namespace Course.Invoice.Application.Invoice.Commands.Create;
 public class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceCommand>
 {
     public CreateInvoiceCommandValidator()

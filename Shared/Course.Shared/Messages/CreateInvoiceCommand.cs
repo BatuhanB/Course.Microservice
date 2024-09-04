@@ -1,6 +1,7 @@
 ﻿namespace Course.Shared.Messages;
 public class CreateInvoiceCommand
 {
+    public int OrderId { get; set; }
     public CustomerForInvoice Customer { get;  set; }
     public OrderInformationForInvoice OrderInformation { get;  set; }
 }

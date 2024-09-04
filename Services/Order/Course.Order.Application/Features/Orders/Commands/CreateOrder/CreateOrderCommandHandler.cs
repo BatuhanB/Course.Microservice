@@ -73,7 +73,7 @@ public class CreateOrderCommandHandler(
             PropertyNameCaseInsensitive = true
         };
 
-        var userResponse = System.Text.Json.JsonSerializer.Deserialize<GetUserByIdResponse>(responseContent, options);
+        var userResponse = JsonSerializer.Deserialize<GetUserByIdResponse>(responseContent, options);
 
         var sendEndpoint = await _sendEndpoint.GetSendEndpoint(new Uri("queue:create-invoiceq"));
 
@@ -90,6 +90,7 @@ public class CreateOrderCommandHandler(
 
         CreateInvoiceCommand command = new()
         {
+            OrderId = mappedOrder.Id,
             Customer = new CustomerForInvoice()
             {
                 UserName = userResponse!.UserName,

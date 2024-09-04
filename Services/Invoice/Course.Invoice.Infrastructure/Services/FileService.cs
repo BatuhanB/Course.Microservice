@@ -20,9 +20,9 @@ public class FileService : IFileService
         _logger = logger;
     }
 
-    public async Task<string> SaveInvoicePdf(Domain.Invoice.Invoice invoice, byte[] pdfBytes)
+    public async Task<(string FileUrlWithEnv, string FileUrlWithOutEnv)> SaveInvoicePdf(Domain.Invoice.Invoice invoice, byte[] pdfBytes)
     {
-        var fileName = $"Invoice_{invoice.Id}_{invoice.CreatedDate:dd_MM_yyyy_HH_mm_ss}";
+        var fileName = $"Invoice_i_{invoice.Id}_o_{invoice.OrderInformation.OrderId}_b_{invoice.OrderInformation.BuyerId}_{invoice.CreatedDate:dd_MM_yyyy_HH_mm_ss}";
 
         var fileExtension = ".pdf";
 
@@ -37,11 +37,12 @@ public class FileService : IFileService
 
         await File.WriteAllBytesAsync(filePath, pdfBytes);
 
-        var fileUrl = $"{_configuration["HostScheme"]}/invoices/{fileName + fileExtension}";
+        var fileUrlWithEnv = $"{_configuration["HostScheme"]}/invoices/{fileName + fileExtension}";
+        var fileUrlWithoutEnv = $"/invoices/{fileName + fileExtension}";
 
-        _logger.LogInformation($"{fileUrl} has been created!");
+        _logger.LogInformation($"{fileUrlWithEnv} has been created!");
 
-        return fileUrl;
+        return (fileUrlWithEnv, fileUrlWithoutEnv);
     }
 
     private static string UniqueFilePath(string fileName, string fileExtension, string directory)

@@ -204,7 +204,7 @@ public class PdfConverterService : IPdfConverterService
               Thank you for your order.
             </td>
             <td class=""text-right"">
-              <span class=""num"">Order #{invoice.Id}</span><br>
+              <span class=""num"">Order #{invoice.OrderInformation.OrderId}</span><br>
               {invoice.CreatedDate:MM/dd/yy H:mm:ss}
             </td>
           </tr>

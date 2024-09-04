@@ -3,6 +3,7 @@
 namespace Course.Invoice.Domain.Invoice;
 public class OrderInformation : Entity
 {
+    public int OrderId { get; private set; }
     public string BuyerId { get; private set; }
     public DateTime OrderDate { get; private set; }
     private readonly List<OrderItem> _orderItems;
@@ -14,8 +15,9 @@ public class OrderInformation : Entity
         
     }
 
-    public OrderInformation(string buyerId, DateTime orderDate)
+    public OrderInformation(int orderId,string buyerId, DateTime orderDate)
     {
+        OrderId = orderId;
         BuyerId = buyerId;
         OrderDate = orderDate;
         _orderItems = new ();
